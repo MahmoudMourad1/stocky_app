@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
             body: SafeArea(
               child: Column(
                 children: [
-                  Text('${StockCubit.get(context).mostGainerData?.data[0].symbol}'),
+                  // Text('${StockCubit.get(context).mostGainerData?.data[0].symbol}'),
                   Container(
                     color: Colors.white,
                     height: 30,
@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
 
                         options: CarouselOptions(
                             height: 380.0,
-                            viewportFraction: 0.2,
+                            viewportFraction: 0.4,
                             initialPage: 0,
                             enableInfiniteScroll: true,
                             reverse: true,
