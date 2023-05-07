@@ -11,7 +11,7 @@ class DioHelper{
         baseUrl: 'https://financialmodelingprep.com/api/v3/stock_market/',
         receiveDataWhenStatusError: true,
         queryParameters: {
-          'apikey':'f2f8ceb66abe450d1d5214198aabd7e6'
+          'apikey':'c17086703ad7c1b7087e9d802ba67d56'
         }
       ),
     );

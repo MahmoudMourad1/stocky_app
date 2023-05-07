@@ -38,13 +38,13 @@ class StockCubit extends Cubit<StockStates>{
 
   StockModel? mostActivesData;
   void GetMostActivesData(){
-    emit(StockLoadingMostGainer());
+    emit(StockLoadingMostActives());
     DioHelper.getData(path: 'actives',).then((value) {
       print(value.data[0]);
       mostGainerData=StockModel.fromJaon(value.data);
-      emit(StockSuccessMostGainer());
+      emit(StockSuccessMostActives());
     }).catchError((error){
-      emit(StockErrorMostGainer(error: error.toString()));
+      emit(StockErrorMostActives(error: error.toString()));
     });
   }
 }

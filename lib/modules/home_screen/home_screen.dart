@@ -1,7 +1,9 @@
+import 'package:card_swiper/card_swiper.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stock_twit/shared/components/components.dart';
 import 'package:stock_twit/shared/cubit/cubit.dart';
 import 'package:stock_twit/shared/cubit/states.dart';
 
@@ -23,7 +25,6 @@ class HomeScreen extends StatelessWidget {
             body: SafeArea(
               child: Column(
                 children: [
-
                   Container(
                     color: Colors.white,
                     height: 30,
@@ -60,6 +61,22 @@ class HomeScreen extends StatelessWidget {
                       fallback: (context)=>Container(width: double.infinity,),
                     ),
                   ),
+
+                  ConditionalBuilder(
+                    condition: StockCubit.get(context).mostGainerData!=null,
+                    builder: (context)=>Container(
+                      height:300,
+                      child: Swiper(
+                        itemBuilder: (BuildContext context, int index) {
+                          return FrostedContainer(StockCubit.get(context).mostGainerData!.data[index]);
+                        },
+                        itemCount: 10,
+                        itemWidth: 300.0,
+                        layout: SwiperLayout.STACK,
+                      ),
+                    ),
+                    fallback: (context)=>CircularProgressIndicator(),
+                  )
 
                 ],
               ),

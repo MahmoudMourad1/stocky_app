@@ -11,9 +11,9 @@ class StockModel{
 class Data{
   String? symbol;
   String? name;
-  double? change;
-  double? price;
-  double? changepercentage;
+  dynamic change;
+  dynamic price;
+  dynamic changepercentage;
 
   Data.fromJson(Map<String,dynamic> json){
     symbol=json['symbol'];
