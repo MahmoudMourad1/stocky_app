@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
             body: SafeArea(
               child: Column(
                 children: [
-                   Text('${StockCubit.get(context).mostGainerData?.data[0].symbol}'),
+
                   Container(
                     color: Colors.white,
                     height: 30,
