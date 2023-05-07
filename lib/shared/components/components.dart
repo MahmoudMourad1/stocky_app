@@ -36,7 +36,7 @@ Widget FrostedContainer (Data model ){
              Container(
                child:Column(
                  children: [
-                   Icon(Icons.auto_graph_outlined,color: Colors.white,),
+                   Icon(model.change>0? Icons.show_chart:Icons.waterfall_chart_outlined,color: model.change>0 ? Colors.green:Colors.red,),
                    Text('${model.change}%',style: TextStyle(fontSize: 10.0,color: Colors.white),)
                  ],
                ),
