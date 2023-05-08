@@ -1,8 +1,9 @@
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:stock_twit/models/stock_model.dart';
 
-Widget FrostedContainer (Data model ){
+Widget SwiperContainer (Data model ){
  return Container(
    width: 300,
    height: 270.0,
@@ -25,25 +26,32 @@ Widget FrostedContainer (Data model ){
            crossAxisAlignment:CrossAxisAlignment.start,
            children: [
              Container(
-               child:Image(image: NetworkImage('https://fmpcloud.io/image-stock/${model.symbol}.png',), fit: BoxFit.cover, width: 30,height: 30,),
                padding: EdgeInsets.all(10.0),
                decoration: BoxDecoration(
                  borderRadius: BorderRadius.circular(10.0),
                  color: Colors.white.withOpacity(0.3),
                ),
+               child:CachedNetworkImage(
+                 imageUrl: "https://fmpcloud.io/image-stock/${model.symbol}.png",
+                 placeholder: (context, url) => new CircularProgressIndicator(),
+                 errorWidget: (context, url, error) => new Icon(Icons.error),
+                 height: 30,
+                 width: 30,
+                 fit: BoxFit.cover,
+                 ),
              ),
              Spacer(),
              Container(
+               padding: EdgeInsets.all(10.0),
+               decoration: BoxDecoration(
+                 borderRadius: BorderRadius.circular(10.0),
+                 color: Colors.white.withOpacity(0.4),
+               ),
                child:Column(
                  children: [
                    Icon(model.change>0? Icons.show_chart:Icons.waterfall_chart_outlined,color: model.change>0 ? Colors.green:Colors.red,),
                    Text('${model.change}%',style: TextStyle(fontSize: 10.0,color: Colors.white),)
                  ],
-               ),
-               padding: EdgeInsets.all(10.0),
-               decoration: BoxDecoration(
-                 borderRadius: BorderRadius.circular(10.0),
-                 color: Colors.white.withOpacity(0.4),
                ),
              ),
            ],
