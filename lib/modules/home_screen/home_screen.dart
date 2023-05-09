@@ -1,4 +1,5 @@
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_swiper/card_swiper.dart';
 
 import 'dart:ui';
@@ -10,6 +11,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stock_twit/shared/components/components.dart';
 import 'package:stock_twit/shared/cubit/cubit.dart';
 import 'package:stock_twit/shared/cubit/states.dart';
+
+import '../../shared/components/imagelist.dart';
+import '../../shared/components/textlist.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -157,10 +161,26 @@ class HomeScreen extends StatelessWidget {
                           ],
 
                         ),
+                        child:Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              CachedNetworkImage(
+                                imageUrl:a[index] ,
+                                placeholder: (context, url) => new CircularProgressIndicator(),
+                                errorWidget: (context, url, error) => new Icon(Icons.error),
+                                height: 50,
+                                width: 50,
+                              ),
+                              SizedBox(height: 10.0,),
+                              Text(B[index],style: TextStyle(color:Colors.black,fontWeight:FontWeight.bold),)
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                     separatorBuilder: (context,index)=>SizedBox(width: 19,),
-                    itemCount: 5),
+                    itemCount: a.length),
               ),
             ],),
 
