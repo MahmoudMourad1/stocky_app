@@ -21,3 +21,11 @@ class StockErrorMostActives extends StockStates{
   final String error;
   StockErrorMostActives({required this.error});
 }
+
+
+class StockSuccessForexData extends StockStates{}
+class StockLoadingForexData extends StockStates{}
+class StockErrorForexData extends StockStates{
+  final String error;
+  StockErrorForexData({required this.error});
+}

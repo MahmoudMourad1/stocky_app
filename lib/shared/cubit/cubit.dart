@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stock_twit/models/forex_model.dart';
 import 'package:stock_twit/models/stock_model.dart';
 import 'package:stock_twit/shared/cubit/states.dart';
 import 'package:stock_twit/shared/network/remote/dio_helpers.dart';
@@ -13,7 +14,7 @@ class StockCubit extends Cubit<StockStates>{
   StockModel? mostGainerData;
   void GetMostGainerData(){
     emit(StockLoadingMostGainer());
-    DioHelper.getData(path: 'gainers',).then((value) {
+    DioHelper.getData(path: 'stock_market/gainers',).then((value) {
       print(value.data[0]);
       mostGainerData=StockModel.fromJaon(value.data);
       emit(StockSuccessMostGainer());
@@ -26,7 +27,7 @@ class StockCubit extends Cubit<StockStates>{
   StockModel? mostLoserData;
   void GetMostLoserData(){
     emit(StockLoadingMostLosers());
-    DioHelper.getData(path: 'losers',).then((value) {
+    DioHelper.getData(path: 'stock_market/losers',).then((value) {
       print(value.data[0]);
       mostGainerData=StockModel.fromJaon(value.data);
       emit(StockSuccessMostLosers());
@@ -39,12 +40,24 @@ class StockCubit extends Cubit<StockStates>{
   StockModel? mostActivesData;
   void GetMostActivesData(){
     emit(StockLoadingMostActives());
-    DioHelper.getData(path: 'actives',).then((value) {
+    DioHelper.getData(path: 'stock_market/actives',).then((value) {
       print(value.data[0]);
       mostGainerData=StockModel.fromJaon(value.data);
       emit(StockSuccessMostActives());
     }).catchError((error){
       emit(StockErrorMostActives(error: error.toString()));
+    });
+  }
+
+  ForexModel? forexData;
+  void GetforexData(){
+    emit(StockLoadingForexData());
+    DioHelper.getData(path: 'fx',).then((value) {
+      print(value.data[0]);
+      forexData=ForexModel.fromJaon(value.data);
+      emit(StockSuccessForexData());
+    }).catchError((error){
+      emit(StockErrorForexData(error: error.toString()));
     });
   }
 }
