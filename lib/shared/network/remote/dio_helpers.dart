@@ -34,4 +34,10 @@ class DioHelper{
 })async{
     return await dio!.get(path,queryParameters: query,);
   }
+  static Future getCryptoData({
+    required String path,
+    Map<String,dynamic>? query,
+  })async{
+    return await dio2!.get(path,queryParameters: query,);
+  }
 }
