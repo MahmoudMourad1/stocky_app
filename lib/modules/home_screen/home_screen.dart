@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:stock_twit/models/stock_model.dart';
+import 'package:stock_twit/modules/etf_screen/etf_screen.dart';
 import 'package:stock_twit/modules/forex_screen/forex_screen.dart';
 import 'package:stock_twit/modules/stock_screen/stock_screen.dart';
 import 'package:stock_twit/shared/components/components.dart';
@@ -229,6 +230,8 @@ class HomeScreen extends StatelessWidget {
       onTap: (){
         if(index ==3 ){
           return NavigateTo(context, ForexScreen());
+        }else if(index==4){
+          return NavigateTo(context, EtfScreen());
         }
         if(index ==0 ){
           return NavigateTo(context, StockScreen());

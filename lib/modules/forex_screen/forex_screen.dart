@@ -12,15 +12,8 @@ class ForexScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
         title: Text('Forex'.toUpperCase(),style: TextStyle(fontSize: 30,fontWeight: FontWeight.w600,color: Colors.white.withOpacity(0.9)),),
         elevation: 0.0,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal:20.0),
-            child: Icon(Icons.search_outlined,size: 30 ,color: Colors.white.withOpacity(0.9),),
-          )
-        ],
         backgroundColor: Colors.black,
       ),
       body: BlocConsumer<StockCubit,StockStates>( listener: (context,state){

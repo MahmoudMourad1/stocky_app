@@ -37,3 +37,10 @@ class StockErrorNewsData extends StockStates{
   final String error;
   StockErrorNewsData({required this.error});
 }
+
+class StockSuccessEtfData extends StockStates{}
+class StockLoadingEtfData extends StockStates{}
+class StockErrorEtfData extends StockStates{
+  final String error;
+  StockErrorEtfData({required this.error});
+}

@@ -16,6 +16,7 @@ class StockScreen extends StatelessWidget {
         length: 3,
         child: Scaffold(
             appBar: AppBar(
+              iconTheme: IconThemeData(color: Colors.black),
 
               title: Text('STOCKS'.toUpperCase(),style: TextStyle(fontSize: 25,fontWeight: FontWeight.w600,color: Colors.black.withOpacity(0.9)),),
 
@@ -39,7 +40,9 @@ class StockScreen extends StatelessWidget {
             ),
             body:TabBarView(children: <Widget>[
 
-              ConditionalBuilder(condition: StockCubit.get(context).mostGainerData?.data!=null, builder: (context)=> Expanded(
+              ConditionalBuilder(condition: StockCubit.get(context).mostGainerData?.data!=null,
+
+                  builder: (context)=> Expanded(
                   child: ListView.separated(itemBuilder: (context,index)=>Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Container(
@@ -91,7 +94,8 @@ class StockScreen extends StatelessWidget {
                       separatorBuilder: (context,index)=>SizedBox(height: 5,),
                       itemCount: StockCubit.get(context).mostGainerData!.data.length)),
                   fallback: (context)=>Center(child: CircularProgressIndicator(),)),
-              ConditionalBuilder(condition: StockCubit.get(context).mostLoserData?.data!=null, builder: (context)=> Expanded(
+              ConditionalBuilder(
+                  condition: StockCubit.get(context).mostLoserData?.data!=null, builder: (context)=> Expanded(
                   child: ListView.separated(itemBuilder: (context,index)=>Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Container(

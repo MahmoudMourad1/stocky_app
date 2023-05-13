@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stock_twit/models/etf_model.dart';
 import 'package:stock_twit/models/forex_model.dart';
 import 'package:stock_twit/models/news_model.dart';
 import 'package:stock_twit/models/stock_model.dart';
@@ -76,5 +77,17 @@ class StockCubit extends Cubit<StockStates>{
         emit(StockErrorNewsData(error: error.toString()));
       });
     }
+
+  EtfModel? etfData;
+  void GetEtfData(){
+    emit(StockLoadingEtfData());
+    DioHelper.getData(path: 'etf/list',).then((value) {
+
+      etfData=EtfModel.fromJson(value.data);
+      emit(StockSuccessEtfData());
+    }).catchError((error){
+      emit(StockErrorEtfData(error: error.toString()));
+    });
+  }
 
 }
