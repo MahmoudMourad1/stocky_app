@@ -9,8 +9,8 @@ import 'package:stock_twit/shared/network/remote/dio_helpers.dart';
 class StockCubit extends Cubit<StockStates>{
   StockCubit():super(StockInitialState());
 
-   static StockCubit get(context) => BlocProvider.of(context);
-  
+  static StockCubit get(context) => BlocProvider.of(context);
+
 
 
 
@@ -62,19 +62,19 @@ class StockCubit extends Cubit<StockStates>{
       emit(StockErrorForexData(error: error.toString()));
     });
   }
-    NewsModel? newsData;
-    void GetNewsData(){
-      emit(StockLoadingNewsData());
-      DioHelper.getData(path: 'fmp/articles',query: {
-        'page':0,
-        'size':10,
-      }).then((value) {
-        print(value.data);
-        newsData=NewsModel.fromJson(value.data);
-        emit(StockSuccessNewsData());
-      }).catchError((error){
-        emit(StockErrorNewsData(error: error.toString()));
-      });
-    }
+  NewsModel? newsData;
+  void GetNewsData(){
+    emit(StockLoadingNewsData());
+    DioHelper.getData(path: 'fmp/articles',query: {
+      'page':0,
+      'size':15,
+    }).then((value) {
+      print(value.data);
+      newsData=NewsModel.fromJson(value.data);
+      emit(StockSuccessNewsData());
+    }).catchError((error){
+      emit(StockErrorNewsData(error: error.toString()));
+    });
+  }
 
 }

@@ -1,9 +1,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_swiper/card_swiper.dart';
-
 import 'dart:ui';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +12,6 @@ import 'package:stock_twit/modules/forex_screen/forex_screen.dart';
 import 'package:stock_twit/shared/components/components.dart';
 import 'package:stock_twit/shared/cubit/cubit.dart';
 import 'package:stock_twit/shared/cubit/states.dart';
-
 import '../../shared/components/imagelist.dart';
 import '../../shared/components/textlist.dart';
 
@@ -85,6 +82,7 @@ class HomeScreen extends StatelessWidget {
                       borderRadius: BorderRadius.only(topRight: Radius.circular(30),topLeft: Radius.circular(30))
                     ),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ConditionalBuilder(
                           condition: StockCubit.get(context).mostGainerData!=null,
@@ -107,34 +105,65 @@ class HomeScreen extends StatelessWidget {
                               itemCount: categoryImg.length),
                         ),
                         SizedBox(height: 10,),
-                        Container(
-                          height: 1000,
-                          child: ListView.separated(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemBuilder: (context,index)=>ConditionalBuilder(
-                                  condition: StockCubit.get(context).newsData!=null && StockCubit.get(context).newsData?.data!=null,
-                                  builder: (context)=> Container(
-                                    width: double.infinity,
-                                    height: 400,
-                                    child:Row(
-                                      children: [
-                                        Container(
-                                          height: 100,
-                                          width: 100,
-                                          child: Image(
-                                            image: NetworkImage('https://cdn.financialmodelingprep.com/images/fmp-1683909976762.jpg'),
-                                            fit: BoxFit.fill,
-                                          ),
-                                        )
-                                      ],
-                                      //add
-                                    ) ,
-                                  ),
-                                  fallback: (context)=>SizedBox()),
-                              separatorBuilder: (context,index)=>SizedBox(height: 10,),
-                              itemCount: 3),
+
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Text('News',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
                         ),
+                        Container(
+                          child: ConditionalBuilder(condition: StockCubit.get(context).newsData?.data!=null,
+                              builder: (context)=>ListView.separated(
+                                physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemBuilder: (context,index)=>Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Container(
+                                      height: 90,color: Colors.transparent,
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            height: 90,
+                                            width: 90,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(20),
+                                              image:DecorationImage(image:
+                                              CachedNetworkImageProvider(
+                                                  '${StockCubit.get(context).newsData!.data[index].image}'),
+                                                fit: BoxFit.fill,),
+                                            ),
+                                          ),
+
+                                          Expanded(child: Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                            child: Column(
+                                              children: [
+
+                                                Text('${StockCubit.get(context).newsData!.data[index].title}' ,style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,),maxLines: 2,overflow: TextOverflow.ellipsis,),
+                                                Spacer(),
+                                                Row(
+                                                  children: [
+                                                    Text('${StockCubit.get(context).newsData!.data[index].author}',style: TextStyle(color:Colors.grey,fontSize: 10.0,),),
+                                                    Text('.',style: TextStyle(color:Colors.grey,fontSize: 15.0,fontWeight: FontWeight.bold),),
+                                                    Text('${StockCubit.get(context).newsData!.data[index].date}',style: TextStyle(color:Colors.grey,fontSize: 10.0,),)
+                                                  ],
+                                                )
+
+                                              ],
+                                            ),
+                                          )),
+                                        ],
+
+                                      ),
+
+                                    ),
+                                  ),
+                                  separatorBuilder:(context,index)=>SizedBox(height: 0,),
+                                  itemCount: StockCubit.get(context).newsData!.data.length),
+                              fallback: (context)=>Container(height: 300, child: CircularProgressIndicator(),)),
+                        ),
+
                       ],
                     ),
 
@@ -244,4 +273,49 @@ class HomeScreen extends StatelessWidget {
       ),
     ),
   );
+
 }
+
+//Container(
+//     padding: EdgeInsets.all(20.0),
+//     width: double.infinity,
+//     height: 150,
+//     color: Colors.white,
+//     child:Column(
+//       children: [
+//         Row(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             Container(
+//               height: 100,
+//               width: 100,
+//               decoration: BoxDecoration(
+//                   image:DecorationImage(image:  NetworkImage('${StockCubit.get(context).newsData!.data[index].image}'),
+//                     fit: BoxFit.fill,),
+//                   borderRadius: BorderRadius.circular(20.0)
+//               ),
+//             ),
+//             SizedBox(width: 10.0,),
+//             Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Text('${StockCubit.get(context).newsData!.data[index].title}',style: TextStyle(color: Colors.black,fontSize: 15.0,
+//                     overflow: TextOverflow.ellipsis),
+//                   maxLines:3,),
+//                 Spacer(),
+//                 Row(
+//                   children: [
+//                     Text('${StockCubit.get(context).newsData!.data[index].author}',style: TextStyle(color:Colors.grey,fontSize: 10.0,),),
+//                     Text('.',style: TextStyle(color:Colors.grey,fontSize: 15.0,fontWeight: FontWeight.bold),),
+//                     Text('${StockCubit.get(context).newsData!.data[index].date}',style: TextStyle(color:Colors.grey,fontSize: 10.0,),)
+//                   ],
+//                 )
+//
+//               ],
+//             ),
+//           ],
+//         ),
+//
+//       ],
+//     ) ,
+//   );
