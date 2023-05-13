@@ -29,3 +29,11 @@ class StockErrorForexData extends StockStates{
   final String error;
   StockErrorForexData({required this.error});
 }
+
+
+class StockSuccessNewsData extends StockStates{}
+class StockLoadingNewsData extends StockStates{}
+class StockErrorNewsData extends StockStates{
+  final String error;
+  StockErrorNewsData({required this.error});
+}

@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stock_twit/models/forex_model.dart';
+import 'package:stock_twit/models/news_model.dart';
 import 'package:stock_twit/models/stock_model.dart';
 import 'package:stock_twit/shared/cubit/states.dart';
 import 'package:stock_twit/shared/network/remote/dio_helpers.dart';
@@ -10,12 +11,14 @@ class StockCubit extends Cubit<StockStates>{
 
    static StockCubit get(context) => BlocProvider.of(context);
   
-  
+
+
+
   StockModel? mostGainerData;
   void GetMostGainerData(){
     emit(StockLoadingMostGainer());
     DioHelper.getData(path: 'stock_market/gainers',).then((value) {
-      print(value.data[0]);
+      // print(value.data[0]);
       mostGainerData=StockModel.fromJaon(value.data);
       emit(StockSuccessMostGainer());
     }).catchError((error){
@@ -28,7 +31,7 @@ class StockCubit extends Cubit<StockStates>{
   void GetMostLoserData(){
     emit(StockLoadingMostLosers());
     DioHelper.getData(path: 'stock_market/losers',).then((value) {
-      print(value.data[0]);
+      // print(value.data[0]);
       mostGainerData=StockModel.fromJaon(value.data);
       emit(StockSuccessMostLosers());
     }).catchError((error){
@@ -41,7 +44,7 @@ class StockCubit extends Cubit<StockStates>{
   void GetMostActivesData(){
     emit(StockLoadingMostActives());
     DioHelper.getData(path: 'stock_market/actives',).then((value) {
-      print(value.data[0]);
+
       mostGainerData=StockModel.fromJaon(value.data);
       emit(StockSuccessMostActives());
     }).catchError((error){
@@ -50,14 +53,28 @@ class StockCubit extends Cubit<StockStates>{
   }
 
   ForexModel? forexData;
-  void GetforexData(){
+  void GetforexData() {
     emit(StockLoadingForexData());
     DioHelper.getData(path: 'fx',).then((value) {
-      print(value.data[0]);
-      forexData=ForexModel.fromJaon(value.data);
+      forexData = ForexModel.fromJaon(value.data);
       emit(StockSuccessForexData());
-    }).catchError((error){
+    }).catchError((error) {
       emit(StockErrorForexData(error: error.toString()));
     });
   }
+    NewsModel? newsData;
+    void GetNewsData(){
+      emit(StockLoadingNewsData());
+      DioHelper.getData(path: 'fmp/articles',query: {
+        'page':0,
+        'size':10,
+      }).then((value) {
+        print(value.data);
+        newsData=NewsModel.fromJson(value.data);
+        emit(StockSuccessNewsData());
+      }).catchError((error){
+        emit(StockErrorNewsData(error: error.toString()));
+      });
+    }
+
 }

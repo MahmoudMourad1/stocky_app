@@ -1,4 +1,4 @@
-List a = [
+List categoryImg = [
   "https://static.thenounproject.com/png/143749-200.png",
   "https://pics.freeicons.io/uploads/icons/png/710376231655921876-512.png",
   "https://cdn1.iconfinder.com/data/icons/web-design-and-development-50/64/108-512.png",

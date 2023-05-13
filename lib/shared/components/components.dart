@@ -9,12 +9,20 @@ Widget SwiperContainer (Data model ){
    height: 270.0,
    decoration: BoxDecoration(
      borderRadius: BorderRadius.circular(20.0),
+     // gradient: LinearGradient(
+     //   colors: [Color(0xffba160a), Color(0x91ba160a)],
+     //   stops: [0, 1],
+     //   begin: Alignment.topLeft,
+     //   end: Alignment.bottomRight,
+     // )
      gradient: LinearGradient(
-       colors: [Color(0xffba160a), Color(0x91ba160a)],
-       stops: [0, 1],
+       colors: [Color(0xff3861FB).withOpacity(0.9), Color(0xff16b5fc).withOpacity(0.8)],
+       stops: [0.3, 1],
        begin: Alignment.topLeft,
        end: Alignment.bottomRight,
      )
+
+
 
    ),
    child: Padding(
