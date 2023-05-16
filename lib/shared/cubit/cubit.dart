@@ -95,7 +95,7 @@ class StockCubit extends Cubit<StockStates>{
   CryptoModel? cryptData;
   void GetCryptoData(){
     emit(StockLoadingCryptoData());
-    DioHelper.getData(path: 'cryptocurrency/listings/latest',).then((value) {
+    DioHelper.getCryptoData(path:'cryptocurrency/listings/latest',).then((value) {
       print(value);
       print("_________________");
       print(cryptData?.data[0].name);
