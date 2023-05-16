@@ -22,6 +22,7 @@ class HomeScreen extends StatelessWidget {
    HomeScreen({Key? key}) : super(key: key);
 
    var controller =ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<StockCubit,StockStates>(
@@ -35,6 +36,7 @@ class HomeScreen extends StatelessWidget {
           print(state.error);
         }
       },
+
       builder: (context,state){
         return Scaffold(
           backgroundColor:  controller.initialScrollOffset>0? Colors.white:Colors.black,
@@ -88,8 +90,8 @@ class HomeScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ConditionalBuilder(
-                          condition: StockCubit.get(context).mostGainerData!=null,
-                          builder: (context)=>SwiperView(StockCubit.get(context).mostGainerData!),
+                          condition: StockCubit.get(context).stockSymbolData!=null,
+                          builder: (context)=>SwiperView(StockCubit.get(context).stockSymbolData,context),
                           fallback: (context)=>Container(
                             color: Colors.transparent,
                               height: 300,
@@ -212,14 +214,14 @@ class HomeScreen extends StatelessWidget {
     ),
   );
 
-  Widget SwiperView(StockModel model)=>Container(
+  Widget SwiperView(List<Map<String,dynamic>> model,context)=>Container(
     padding: EdgeInsets.all(8.0),
     height:300,
     child: Swiper(
       itemBuilder: (BuildContext context, int index) {
-        return SwiperContainer(StockCubit.get(context).mostGainerData!.data[index]);
+        return SwiperContainer(StockCubit.get(context).stockSymbolData[index]);
       },
-      itemCount: 10,
+      itemCount: StockCubit.get(context).stockSymbolData.length,
       itemWidth: 300.0,
       layout: SwiperLayout.STACK,
     ),
@@ -287,46 +289,3 @@ class HomeScreen extends StatelessWidget {
 
 }
 
-//Container(
-//     padding: EdgeInsets.all(20.0),
-//     width: double.infinity,
-//     height: 150,
-//     color: Colors.white,
-//     child:Column(
-//       children: [
-//         Row(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Container(
-//               height: 100,
-//               width: 100,
-//               decoration: BoxDecoration(
-//                   image:DecorationImage(image:  NetworkImage('${StockCubit.get(context).newsData!.data[index].image}'),
-//                     fit: BoxFit.fill,),
-//                   borderRadius: BorderRadius.circular(20.0)
-//               ),
-//             ),
-//             SizedBox(width: 10.0,),
-//             Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 Text('${StockCubit.get(context).newsData!.data[index].title}',style: TextStyle(color: Colors.black,fontSize: 15.0,
-//                     overflow: TextOverflow.ellipsis),
-//                   maxLines:3,),
-//                 Spacer(),
-//                 Row(
-//                   children: [
-//                     Text('${StockCubit.get(context).newsData!.data[index].author}',style: TextStyle(color:Colors.grey,fontSize: 10.0,),),
-//                     Text('.',style: TextStyle(color:Colors.grey,fontSize: 15.0,fontWeight: FontWeight.bold),),
-//                     Text('${StockCubit.get(context).newsData!.data[index].date}',style: TextStyle(color:Colors.grey,fontSize: 10.0,),)
-//                   ],
-//                 )
-//
-//               ],
-//             ),
-//           ],
-//         ),
-//
-//       ],
-//     ) ,
-//   );

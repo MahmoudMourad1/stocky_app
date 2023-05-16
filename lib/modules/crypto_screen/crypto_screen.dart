@@ -1,8 +1,7 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../models/etf_model.dart';
+import 'package:stock_twit/models/crypto_model.dart';
 import '../../shared/cubit/cubit.dart';
 import '../../shared/cubit/states.dart';
 
@@ -21,16 +20,17 @@ class CryptoScreen extends StatelessWidget {
       body: BlocConsumer<StockCubit,StockStates>( listener: (context,state){
 
       },
-          builder: (context,state)=>ConditionalBuilder(condition: StockCubit.get(context).etfData?.data !=null,
+          builder: (context,state)=>ConditionalBuilder(
+              condition: StockCubit.get(context).cryptData?.data !=null  ,
               builder:(context)=> Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: ListView.separated(itemBuilder: (context,index)=>BuildEtfItem(StockCubit.get(context).etfData!.data[index]),
+                child: ListView.separated(itemBuilder: (context,index)=>BuildEtfItem(StockCubit.get(context).cryptData!.data[index]),
                     separatorBuilder: (context,index)=>Container(
                       padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10.0),
                       height: 1,
                       color: Colors.grey.shade300,
                     ),
-                    itemCount: StockCubit.get(context).etfData!.data.length),
+                    itemCount: StockCubit.get(context).cryptData!.data.length),
               ),
               fallback: (context)=>Center(child: CircularProgressIndicator()))
       ),
@@ -38,24 +38,29 @@ class CryptoScreen extends StatelessWidget {
   }
 
   Widget BuildEtfItem(Data model) =>Container(
-    padding: EdgeInsets.all(20.0),
+    padding: EdgeInsets.all(15.0),
     child: Column(
       children: [
 
         Row(
+
           children: [
+
             Text('${model.symbol}',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black,),),
             Spacer(),
-            Text('${model.price}',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black,),),
+            Text('${model.dataUSD?.price}',style:TextStyle(color:Colors.grey,fontWeight: FontWeight.bold),),
+
 
           ],
         ),
-        SizedBox(height: 10,),
+       SizedBox(height: 10,),
         Row(
+
+
           children: [
-            Text('${model.exchangeShortName}',style:TextStyle(color:Colors.grey,fontWeight: FontWeight.bold),),
+            Text('${model.name}',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black,),),
             Spacer(),
-            Text('${model.exchange}',style:TextStyle(color:Colors.grey,fontWeight: FontWeight.bold,),),
+            Text('${model.dataUSD?.volume_change_24h}',style:TextStyle(color:Colors.grey,fontWeight: FontWeight.bold,),),
 
 
           ],

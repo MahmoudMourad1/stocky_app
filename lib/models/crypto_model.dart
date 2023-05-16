@@ -29,7 +29,7 @@ class Data{
     circulating_supply=json['circulating_supply'];
     total_supply=json['total_supply'];
     last_updated=json['last_updated'];
-    dataUSD=json['quote']['USD'];
+    dataUSD=DataUSD.fromJson(json['quote']['USD']);
   }
 }
 
@@ -48,7 +48,7 @@ class DataUSD{
   dynamic fully_diluted_market_cap;
   String? last_updated;
 
-  DataUSD.fromJson(Map<String,dynamic> json){
+  DataUSD.fromJson(dynamic json){
    price=json['price'];
    volume_24h=json['volume_24h'];
    volume_change_24h=json['volume_change_24h'];

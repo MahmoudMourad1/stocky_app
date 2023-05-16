@@ -96,18 +96,32 @@ class StockCubit extends Cubit<StockStates>{
   void GetCryptoData(){
     emit(StockLoadingCryptoData());
     DioHelper.getCryptoData(path:'cryptocurrency/listings/latest',).then((value) {
-      print(value);
-      print("_________________");
-      print(cryptData?.data[0].name);
-      cryptData=CryptoModel.fromJson(value.data);
+
+      cryptData=CryptoModel.fromJson(value.data['data']);
       emit(StockSuccessCryptData());
     }).catchError((error){
+      print(error.toString());
       emit(StockErrorCryptoData(error: error.toString()));
     });
   }
 
 
+  List<Map<String,dynamic>> stockSymbolData=[];
+  void GetStockSymbolData(){
+    emit(StockLoadingStockSymbolData());
+    DioHelper.getData(path: 'quote/TWTR,GOOGL,TSLA,AAPL',).then((value) {
 
+      value.data.forEach((element) {
+
+        stockSymbolData.add(element);
+
+      });
+      emit(StockSuccessStockSymbolData());
+    }).catchError((error){
+      print(error.toString());
+      emit(StockErrorStockSymbolData(error: error.toString()));
+    });
+  }
 
 
 }

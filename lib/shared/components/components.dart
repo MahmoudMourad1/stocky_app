@@ -1,9 +1,9 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:stock_twit/models/stock_model.dart';
 
-Widget SwiperContainer (Data model ){
+
+Widget SwiperContainer (Map<String,dynamic> model ){
  return Container(
    width: 300,
    height: 270.0,
@@ -40,7 +40,7 @@ Widget SwiperContainer (Data model ){
                  color: Colors.white.withOpacity(0.3),
                ),
                child:CachedNetworkImage(
-                 imageUrl: "https://fmpcloud.io/image-stock/${model.symbol}.png",
+                 imageUrl: "https://fmpcloud.io/image-stock/${model['symbol']}.png",
                  placeholder: (context, url) => new CircularProgressIndicator(),
                  errorWidget: (context, url, error) => new Icon(Icons.error),
                  height: 30,
@@ -57,8 +57,8 @@ Widget SwiperContainer (Data model ){
                ),
                child:Column(
                  children: [
-                   Icon(model.change>0? Icons.show_chart:Icons.waterfall_chart_outlined,color: model.change>0 ? Colors.green:Colors.red,),
-                   Text('${model.change}%',style: TextStyle(fontSize: 10.0,color: Colors.white),)
+                   Icon(model['change']>0? Icons.show_chart:Icons.waterfall_chart_outlined,color: model['change']>0 ? Colors.green:Colors.red,),
+                   Text('${model['change']}%',style: TextStyle(fontSize: 10.0,color: Colors.white),)
                  ],
                ),
              ),
@@ -69,13 +69,13 @@ Widget SwiperContainer (Data model ){
            width: double.infinity,
            child: Column(
              children:   [
-               Text('${model.name}',style: TextStyle(color: Colors.white,fontSize: 20.0,fontWeight: FontWeight.w500),)],
+               Text('${model['name']}',style: TextStyle(color: Colors.white,fontSize: 20.0,fontWeight: FontWeight.w500),)],
            ),
          ),
          Spacer(),
          Row(
            children: [
-             Text('${model.symbol} ',style: TextStyle(color:Colors.white,fontSize: 15.0),)
+             Text('${model['symbol']} ',style: TextStyle(color:Colors.white,fontSize: 15.0),)
            ],
          ),
 

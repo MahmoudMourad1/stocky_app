@@ -21,7 +21,7 @@ class DioHelper{
           baseUrl: 'https://pro-api.coinmarketcap.com/v1/',
           receiveDataWhenStatusError: true,
           queryParameters: {
-            'apikey':'c19a2175-df2e-4bab-8fc7-cb7a1a0d34d4'
+            'CMC_PRO_API_KEY':'c19a2175-df2e-4bab-8fc7-cb7a1a0d34d4'
           }
       ),
     );
