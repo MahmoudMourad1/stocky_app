@@ -1,5 +1,7 @@
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stock_twit/models/crypto_model.dart';
 import 'package:stock_twit/models/etf_model.dart';
 import 'package:stock_twit/models/forex_model.dart';
 import 'package:stock_twit/models/news_model.dart';
@@ -87,6 +89,20 @@ class StockCubit extends Cubit<StockStates>{
       emit(StockSuccessEtfData());
     }).catchError((error){
       emit(StockErrorEtfData(error: error.toString()));
+    });
+  }
+
+  CryptoModel? cryptData;
+  void GetCryptoData(){
+    emit(StockLoadingCryptoData());
+    DioHelper.getData(path: 'cryptocurrency/listings/latest',).then((value) {
+      print(value);
+      print("_________________");
+      print(cryptData?.data[0].name);
+      cryptData=CryptoModel.fromJson(value.data);
+      emit(StockSuccessCryptData());
+    }).catchError((error){
+      emit(StockErrorCryptoData(error: error.toString()));
     });
   }
 
