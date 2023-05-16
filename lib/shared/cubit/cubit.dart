@@ -106,4 +106,8 @@ class StockCubit extends Cubit<StockStates>{
     });
   }
 
+
+
+
+
 }

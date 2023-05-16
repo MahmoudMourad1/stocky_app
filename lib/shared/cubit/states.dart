@@ -43,7 +43,10 @@ class StockLoadingEtfData extends StockStates{}
 class StockErrorEtfData extends StockStates{
   final String error;
   StockErrorEtfData({required this.error});
+
 }
+
+
 
 
 class StockSuccessCryptData extends StockStates{}

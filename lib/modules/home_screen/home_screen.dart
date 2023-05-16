@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:stock_twit/models/stock_model.dart';
+import 'package:stock_twit/modules/crypto_screen/crypto_screen.dart';
 import 'package:stock_twit/modules/etf_screen/etf_screen.dart';
 import 'package:stock_twit/modules/forex_screen/forex_screen.dart';
 import 'package:stock_twit/modules/stock_screen/stock_screen.dart';
@@ -235,7 +236,10 @@ class HomeScreen extends StatelessWidget {
         }
         if(index ==0 ){
           return NavigateTo(context, StockScreen());
-        }
+        }else if (index==1)
+          {
+            return NavigateTo(context, CryptoScreen());
+          }
       },
       child: Container(
         width: 100,
