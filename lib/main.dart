@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (BuildContext context)=>StockCubit()..GetMostGainerData()..GetMostActivesData()..GetMostLoserData()..GetforexData()..GetNewsData()..GetEtfData()..GetCryptoData()..GetStockSymbolData(),)
+        BlocProvider(create: (BuildContext context)=>StockCubit()..GetMostGainerData()..GetMostActivesData()..GetMostLoserData()..GetforexData()..GetNewsData()..GetEtfData()..GetCryptoData()..GetStockSymbolData()..GetTickerData(from: '2021-07-28', to: '2021-08-3',symbol: 'TSLA'),)
       ],
       child: MaterialApp(
         theme: ThemeData(

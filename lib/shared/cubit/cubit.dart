@@ -6,6 +6,7 @@ import 'package:stock_twit/models/etf_model.dart';
 import 'package:stock_twit/models/forex_model.dart';
 import 'package:stock_twit/models/news_model.dart';
 import 'package:stock_twit/models/stock_model.dart';
+import 'package:stock_twit/models/ticker_model.dart';
 import 'package:stock_twit/shared/cubit/states.dart';
 import 'package:stock_twit/shared/network/remote/dio_helpers.dart';
 
@@ -14,6 +15,8 @@ class StockCubit extends Cubit<StockStates>{
 
    static StockCubit get(context) => BlocProvider.of(context);
   
+
+
 
 
 
@@ -69,6 +72,7 @@ class StockCubit extends Cubit<StockStates>{
     void GetNewsData(){
       emit(StockLoadingNewsData());
       DioHelper.getData(path: 'fmp/articles',query: {
+
         'page':0,
         'size':10,
       }).then((value) {
@@ -120,6 +124,21 @@ class StockCubit extends Cubit<StockStates>{
     }).catchError((error){
       print(error.toString());
       emit(StockErrorStockSymbolData(error: error.toString()));
+    });
+  }
+  TickerModel? tickerData;
+  void GetTickerData({required String from,required String to,required String symbol}){
+    emit(StockLoadingEtfData());
+    DioHelper.getData(path: 'historical-price-full/${symbol}',query: {
+      'from': from,
+      'to':to
+    }).then((value) {
+
+      tickerData=TickerModel.fromJson(value.data);
+      emit(StockSuccessTickerData());
+    }).catchError((error){
+      print(error.toString());
+      emit(StockErrorTickerData(error: error.toString()));
     });
   }
 

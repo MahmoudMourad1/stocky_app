@@ -57,6 +57,14 @@ class StockErrorCryptoData extends StockStates{
   StockErrorCryptoData({required this.error});
 }
 
+
+class StockSuccessTickerData extends StockStates{}
+class StockLoadingTickerData extends StockStates{}
+class StockErrorTickerData extends StockStates{
+  final String error;
+  StockErrorTickerData({required this.error});
+}
+
 class StockSuccessStockSymbolData extends StockStates{}
 class StockLoadingStockSymbolData extends StockStates{}
 class StockErrorStockSymbolData extends StockStates{

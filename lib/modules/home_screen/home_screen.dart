@@ -219,7 +219,7 @@ class HomeScreen extends StatelessWidget {
     height:300,
     child: Swiper(
       itemBuilder: (BuildContext context, int index) {
-        return SwiperContainer(StockCubit.get(context).stockSymbolData[index]);
+        return SwiperContainer(StockCubit.get(context).stockSymbolData[index],context);
       },
       itemCount: StockCubit.get(context).stockSymbolData.length,
       itemWidth: 300.0,

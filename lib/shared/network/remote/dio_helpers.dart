@@ -12,7 +12,7 @@ class DioHelper{
         baseUrl: 'https://financialmodelingprep.com/api/v3/',
         receiveDataWhenStatusError: true,
         queryParameters: {
-          'apikey':'0143334a7451c5fb844aa29737aad777'
+          'apikey':'f2f8ceb66abe450d1d5214198aabd7e6'
         }
       ),
     );
