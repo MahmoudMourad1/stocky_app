@@ -6,7 +6,7 @@ import 'package:stock_twit/models/ticker_model.dart';
 
 import 'package:stock_twit/shared/cubit/cubit.dart';
 import 'package:stock_twit/shared/cubit/states.dart';
-// import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class TickerScreen extends StatelessWidget {
   const TickerScreen({
@@ -22,12 +22,14 @@ class TickerScreen extends StatelessWidget {
 
 
   @override
+
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context)=>StockCubit()..GetTickerData(from: from, to: to, symbol: symbol),
 
       child: BlocConsumer<StockCubit,StockStates>(listener:(context,state){} ,builder:(context,state){
        TickerModel? ticker =StockCubit.get(context).tickerData;
+       StockCubit.get(context).tooltipBehavior = TooltipBehavior(enable: true);
         return Scaffold(
           body: SafeArea(
             child: ConditionalBuilder(
@@ -70,24 +72,27 @@ class TickerScreen extends StatelessWidget {
 
                   //Drawing Chart
 
-                  // Container(
-                  //   child: SfCartesianChart(
-                  //     primaryXAxis: CategoryAxis(),
-                  //     series: <ChartSeries>[
-                  //       LineSeries<ChartData, String>(
-                  //           dataSource: [
-                  //             ChartData('Jan', 35, Colors.red),
-                  //             ChartData('Feb', 28, Colors.green),
-                  //             ChartData('Mar', 34, Colors.blue),
-                  //             ChartData('Apr', 32, Colors.pink),
-                  //             ChartData('May', 40, Colors.black)
-                  //           ],
-                  //           pointColorMapper:(ChartData data, _) => data.color,
-                  //           xValueMapper: (ChartData data, _) => data.x,
-                  //           yValueMapper: (ChartData data, _) => data.y)
-                  //     ],
-                  //   ),
-                  // ),
+                  Container(
+                    child: SfCartesianChart(
+                      primaryXAxis: CategoryAxis(),
+                      tooltipBehavior:StockCubit.get(context).tooltipBehavior ,
+                      series: <ChartSeries>[
+                        LineSeries<ChartData, String>(
+                          enableTooltip: true,
+                            dataSource: [
+                              ChartData(ticker.data[0].date, ticker.data[0].open, Colors.black),
+                              ChartData(ticker.data[1].date, ticker.data[1].open, Colors.green),
+                              ChartData(ticker.data[2].date, ticker.data[2].open, Colors.black),
+                              ChartData(ticker.data[3].date, ticker.data[3].open, Colors.black),
+                              ChartData(ticker.data[4].date, ticker.data[4].open, Colors.black)
+                            ],
+                            pointColorMapper:(ChartData data, _) => data.color,
+                            xValueMapper: (ChartData data, _) => data.x,
+                            yValueMapper: (ChartData data, _) => data.y),
+
+                      ],
+                    ),
+                  ),
 
                 ],
               ),
@@ -103,9 +108,9 @@ class TickerScreen extends StatelessWidget {
   }
 
 }
-// class ChartData {
-//   ChartData(this.x, this.y, this.color);
-//   final String x;
-//   final double y;
-//   final Color color;
-// }
+class ChartData {
+  ChartData(this.x, this.y, this.color);
+  final dynamic x;
+  final dynamic y;
+  final Color color;
+}

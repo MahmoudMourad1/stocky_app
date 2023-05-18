@@ -9,6 +9,7 @@ import 'package:stock_twit/models/stock_model.dart';
 import 'package:stock_twit/models/ticker_model.dart';
 import 'package:stock_twit/shared/cubit/states.dart';
 import 'package:stock_twit/shared/network/remote/dio_helpers.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class StockCubit extends Cubit<StockStates>{
   StockCubit():super(StockInitialState());
@@ -141,6 +142,10 @@ class StockCubit extends Cubit<StockStates>{
       emit(StockErrorTickerData(error: error.toString()));
     });
   }
+  late TooltipBehavior tooltipBehavior;
+
+
+
 
 
 }
