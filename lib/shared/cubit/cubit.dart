@@ -143,7 +143,7 @@ class StockCubit extends Cubit<StockStates>{
     });
   }
   late TooltipBehavior tooltipBehavior;
-  List<String> drop=[] ;
+  List<DateTime> drop=[] ;
   String? dropdownValue ;
 void changeValue({required String value}){
   dropdownValue=value;
