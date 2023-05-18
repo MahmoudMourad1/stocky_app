@@ -38,6 +38,7 @@ class TickerScreen extends StatelessWidget {
         '2022-07-21',
         '2022-09-30',
         '2022-12-12'];
+       StockCubit.get(context).changeValue(value: StockCubit.get(context).drop.first);
 
        final List<ChartData> chartData = [];
        StockCubit.get(context).tickerData?.data.forEach((element) {
@@ -123,7 +124,7 @@ class TickerScreen extends StatelessWidget {
                 },
                 onTap: (){
                   DateFormat('MM-dd-yyyy').parse(StockCubit.get(context).dropdownValue!);
-                  print(DateFormat('MM-dd-yyyy').parse(StockCubit.get(context).dropdownValue!));
+                  print(DateFormat('MM-dd-yyyy').parse('3-25-2023'));
 
                 },
                 items: StockCubit.get(context).drop.map<DropdownMenuItem<String>>((String value) {
@@ -134,6 +135,8 @@ class TickerScreen extends StatelessWidget {
                 }).toList(),),
 
 
+
+                  Text('Statistics',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w600,color: Colors.blueGrey),)
 
                 ],
               ),
