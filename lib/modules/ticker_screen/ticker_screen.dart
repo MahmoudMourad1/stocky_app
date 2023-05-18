@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:stock_twit/models/ticker_model.dart';
 
 import 'package:stock_twit/shared/cubit/cubit.dart';
@@ -30,6 +31,15 @@ class TickerScreen extends StatelessWidget {
       child: BlocConsumer<StockCubit,StockStates>(listener:(context,state){} ,builder:(context,state){
        TickerModel? ticker =StockCubit.get(context).tickerData;
        StockCubit.get(context).tooltipBehavior = TooltipBehavior(enable: true);
+       StockCubit.get(context).drop=<String>['2021-07-30',
+        '2021-10-25',
+        '2022-01-20',
+        '2022-05-09',
+        '2022-07-21',
+        '2022-09-30',
+        '2022-12-12'];
+
+
         return Scaffold(
           body: SafeArea(
             child: ConditionalBuilder(
@@ -93,6 +103,37 @@ class TickerScreen extends StatelessWidget {
                       ],
                     ),
                   ),
+
+              DropdownButton<String>(
+                alignment: Alignment.bottomCenter,
+                value: StockCubit.get(context).dropdownValue,
+                icon: const Icon(Icons.calendar_month),
+                borderRadius: BorderRadius.circular(10.0),
+                elevation: 16,
+                style: const TextStyle(color: Colors.deepPurple),
+                underline: Container(
+                  height: 2,
+                  color: Colors.deepPurpleAccent,
+                ),
+
+                onChanged: (String? value) {
+                  // This is called when the user selects an item.
+                  StockCubit.get(context).changeValue(value: value!);
+
+                },
+                onTap: (){
+                  DateFormat('MM-dd-yyyy').parse(StockCubit.get(context).dropdownValue!);
+                  print(DateFormat('MM-dd-yyyy').parse(StockCubit.get(context).dropdownValue!));
+
+                },
+                items: StockCubit.get(context).drop.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value,),
+                  );
+                }).toList(),),
+
+
 
                 ],
               ),

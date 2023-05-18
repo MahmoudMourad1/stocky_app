@@ -143,6 +143,14 @@ class StockCubit extends Cubit<StockStates>{
     });
   }
   late TooltipBehavior tooltipBehavior;
+  List<String> drop=[] ;
+  String? dropdownValue ;
+void changeValue({required String value}){
+  dropdownValue=value;
+  emit(StockSuccesschangevalue());
+
+}
+
 
 
 
