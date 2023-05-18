@@ -39,6 +39,12 @@ class TickerScreen extends StatelessWidget {
         '2022-09-30',
         '2022-12-12'];
 
+       final List<ChartData> chartData = [];
+       StockCubit.get(context).tickerData?.data.forEach((element) {
+         chartData.add(ChartData(element.date, element.open, Colors.black));
+       });
+
+       List<ChartData> chartDat=List.from(chartData.reversed);
 
         return Scaffold(
           body: SafeArea(
@@ -89,13 +95,7 @@ class TickerScreen extends StatelessWidget {
                       series: <ChartSeries>[
                         LineSeries<ChartData, String>(
                           enableTooltip: true,
-                            dataSource: [
-                              ChartData(ticker.data[0].date, ticker.data[0].open, Colors.black),
-                              ChartData(ticker.data[1].date, ticker.data[1].open, Colors.green),
-                              ChartData(ticker.data[2].date, ticker.data[2].open, Colors.black),
-                              ChartData(ticker.data[3].date, ticker.data[3].open, Colors.black),
-                              ChartData(ticker.data[4].date, ticker.data[4].open, Colors.black)
-                            ],
+                            dataSource: chartDat,
                             pointColorMapper:(ChartData data, _) => data.color,
                             xValueMapper: (ChartData data, _) => data.x,
                             yValueMapper: (ChartData data, _) => data.y),

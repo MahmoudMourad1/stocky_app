@@ -9,7 +9,7 @@ Widget SwiperContainer (Map<String,dynamic> model ,context){
    onTap: (){
 
 
-     NavigateTo(context,TickerScreen(from: '2021-07-28',to:'2021-08-5' ,symbol:model['symbol'] ,));
+     NavigateTo(context,TickerScreen(from: '2021-07-25',to:'2021-08-05' ,symbol:model['symbol'] ,));
    },
    child: Container(
      width: 300,
