@@ -31,20 +31,30 @@ class TickerScreen extends StatelessWidget {
       child: BlocConsumer<StockCubit,StockStates>(listener:(context,state){} ,builder:(context,state){
        TickerModel? ticker =StockCubit.get(context).tickerData;
        StockCubit.get(context).tooltipBehavior = TooltipBehavior(enable: true);
-       StockCubit.get(context).drop=<DateTime>[
-         DateTime(2023, 07, 30),
-         DateTime(2021,10,25),
-         DateTime(2022,01,20),
-         DateTime(2022,05,09),
-         DateTime(2021,07,21),
-         DateTime(2022,09,30),
-         DateTime(2022,12,12),
-        ];
+       if(ticker?.symbol=='TSLA'){
+         StockCubit.get(context).drop=<DateTime>[
+           DateTime(2023, 07, 30),
+           DateTime(2021,10,25),
+           DateTime(2022,01,20),
+           DateTime(2022,05,09),
+           DateTime(2021,07,21),
+           DateTime(2022,09,30),
+           DateTime(2022,12,12),
+         ];
+       }else if(ticker?.symbol=='GOOGL'){
+         StockCubit.get(context).drop=<DateTime>[
+           DateTime(2023, 03, 17),
+           DateTime(2022,09, 16),
+           DateTime(2022,04, 25),
+           DateTime(2022,01, 05),
+           DateTime(2021,07, 23),
+         ];
+       }
 
 
        final List<ChartData> chartData = [];
        StockCubit.get(context).tickerData?.data.forEach((element) {
-         chartData.add(ChartData(element.date, element.open, element.date==StockCubit.get(context).dropdownValue?Colors.green:Colors.grey.shade400));
+         chartData.add(ChartData(element.date, element.open, element.date==StockCubit.get(context).dropdownValue?(element.change>0?Colors.green:Colors.red):Colors.grey.shade400));
        });
 
        List<ChartData> chartDat=List.from(chartData.reversed);
@@ -106,6 +116,12 @@ class TickerScreen extends StatelessWidget {
                               pointColorMapper:(ChartData data, _) => data.color,
                               xValueMapper: (ChartData data, _) => data.x,
                               yValueMapper: (ChartData data, _) => data.y),
+                          ScatterSeries<ChartData, String>(
+                              dataSource: chartData,
+                              pointColorMapper:(ChartData data, _) => data.color,
+                              xValueMapper: (ChartData data, _) => data.x,
+                              yValueMapper: (ChartData data, _) => data.y
+                          )
 
                         ],
                       ),
