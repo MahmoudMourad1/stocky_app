@@ -44,6 +44,7 @@ dependencies:
   scroll_app_bar: ^2.0.0
   syncfusion_flutter_core: ^21.2.5
   syncfusion_flutter_charts: ^21.2.5
+  syncfusion_flutter_datagrid: ^21.2.5
   flutter_launcher_icons: "^0.13.1"
   auto_scroll: ^0.1.0
   fancy_shimmer_image: ^2.0.2

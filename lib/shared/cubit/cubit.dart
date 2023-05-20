@@ -114,7 +114,7 @@ class StockCubit extends Cubit<StockStates>{
   List<Map<String,dynamic>> stockSymbolData=[];
   void GetStockSymbolData(){
     emit(StockLoadingStockSymbolData());
-    DioHelper.getData(path: 'quote/TWTR,GOOGL,TSLA,AAPL',).then((value) {
+    DioHelper.getData(path: 'quote/TWTR,GOOGL,TSLA,AAPL,AMZN,MSFT,FB,JPM,V,PG,JNJ,NVDA,PFE,XOM',).then((value) {
 
       value.data.forEach((element) {
 

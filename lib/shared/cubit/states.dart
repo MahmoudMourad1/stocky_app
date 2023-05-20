@@ -74,6 +74,7 @@ class StockErrorStockSymbolData extends StockStates{
 }
 
 class StockSuccesschangevalue extends StockStates{}
+class StockSuccevalue extends StockStates{}
 
 
 
