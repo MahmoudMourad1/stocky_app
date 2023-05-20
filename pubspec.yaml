@@ -46,6 +46,9 @@ dependencies:
   syncfusion_flutter_charts: ^21.2.5
   flutter_launcher_icons: "^0.13.1"
   auto_scroll: ^0.1.0
+  fancy_shimmer_image: ^2.0.2
+  webview_flutter: ^4.2.0
+
 
 
 

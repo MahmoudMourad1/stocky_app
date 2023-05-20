@@ -151,6 +151,27 @@ void changeValue({required String value}){
 
 }
 
+  List<dynamic> search = [];
+
+  void getsearch(String value) {
+    emit(StocketSearchLoadingState());
+    DioHelper.getData(path: 'search',
+        query: {
+          'query': '$value',
+          'limit':'10',
+          'apikey': '88b5300c07698d30c1d98089511a9436',
+          'exchange':'NASDAQ',
+        }).then((value) {
+      // print(value.data['articles'][0]['title']);
+      search = value.data;
+
+      emit(StockSearchSuccessState());
+    }).catchError((error) {
+      print(error.toString());
+      emit(StockSearchErrorState(error: error.toString()));
+    });
+  }
+
 
 
 

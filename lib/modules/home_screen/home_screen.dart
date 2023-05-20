@@ -11,12 +11,14 @@ import 'package:stock_twit/models/stock_model.dart';
 import 'package:stock_twit/modules/crypto_screen/crypto_screen.dart';
 import 'package:stock_twit/modules/etf_screen/etf_screen.dart';
 import 'package:stock_twit/modules/forex_screen/forex_screen.dart';
+import 'package:stock_twit/modules/search_screen/search_screen.dart';
 import 'package:stock_twit/modules/stock_screen/stock_screen.dart';
 import 'package:stock_twit/shared/components/components.dart';
 import 'package:stock_twit/shared/cubit/cubit.dart';
 import 'package:stock_twit/shared/cubit/states.dart';
 import '../../shared/components/imagelist.dart';
 import '../../shared/components/textlist.dart';
+import '../news_webview/news_webview.dart';
 
 class HomeScreen extends StatelessWidget {
    HomeScreen({Key? key}) : super(key: key);
@@ -47,8 +49,11 @@ class HomeScreen extends StatelessWidget {
             elevation: 0.0,
             actions: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal:20.0),
-                child: Icon(Icons.search,size: 25 ,color: Colors.grey.withOpacity(0.9),),
+                padding: const EdgeInsets.symmetric(horizontal:10.0),
+                child: IconButton(icon:Icon(Icons.search,size: 25) ,color: Colors.grey.withOpacity(0.9),
+                  onPressed: (){
+                  NavigateTo(context, SearchScreen());
+                },),
               )
             ],
             backgroundColor: Colors.transparent,
@@ -122,46 +127,52 @@ class HomeScreen extends StatelessWidget {
                                   shrinkWrap: true,
                                   itemBuilder: (context,index)=>Padding(
                                     padding: const EdgeInsets.all(20.0),
-                                    child: Container(
-                                      height: 90,color: Colors.transparent,
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            height: 90,
-                                            width: 90,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius: BorderRadius.circular(20),
-                                              image:DecorationImage(image:
-                                              CachedNetworkImageProvider(
-                                                  '${StockCubit.get(context).newsData!.data[index].image}'),
-                                                fit: BoxFit.fill,),
+                                    child: InkWell(
+                                      onTap: (){
+                                        NavigateTo(context, webviewScreen("${StockCubit.get(context).newsData!.data[index].link}"));
+
+                                      },
+                                      child: Container(
+                                        height: 90,color: Colors.transparent,
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              height: 90,
+                                              width: 90,
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.circular(20),
+                                                image:DecorationImage(image:
+                                                CachedNetworkImageProvider(
+                                                    '${StockCubit.get(context).newsData!.data[index].image}'),
+                                                  fit: BoxFit.fill,),
+                                              ),
                                             ),
-                                          ),
 
-                                          Expanded(child: Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                            child: Column(
-                                              children: [
+                                            Expanded(child: Padding(
+                                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                              child: Column(
+                                                children: [
 
-                                                Text('${StockCubit.get(context).newsData!.data[index].title}' ,style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,),maxLines: 2,overflow: TextOverflow.ellipsis,),
-                                                Spacer(),
-                                                Row(
-                                                  children: [
-                                                    Text('${StockCubit.get(context).newsData!.data[index].author}',style: TextStyle(color:Colors.grey,fontSize: 10.0,),),
-                                                    Text('.',style: TextStyle(color:Colors.grey,fontSize: 15.0,fontWeight: FontWeight.bold),),
-                                                    Text('${StockCubit.get(context).newsData!.data[index].date}',style: TextStyle(color:Colors.grey,fontSize: 10.0,),)
-                                                  ],
-                                                )
+                                                  Text('${StockCubit.get(context).newsData!.data[index].title}' ,style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,),maxLines: 2,overflow: TextOverflow.ellipsis,),
+                                                  Spacer(),
+                                                  Row(
+                                                    children: [
+                                                      Text('${StockCubit.get(context).newsData!.data[index].author}',style: TextStyle(color:Colors.grey,fontSize: 10.0,),),
+                                                      Text('.',style: TextStyle(color:Colors.grey,fontSize: 15.0,fontWeight: FontWeight.bold),),
+                                                      Text('${StockCubit.get(context).newsData!.data[index].date}',style: TextStyle(color:Colors.grey,fontSize: 10.0,),)
+                                                    ],
+                                                  )
 
-                                              ],
-                                            ),
-                                          )),
-                                        ],
+                                                ],
+                                              ),
+                                            )),
+                                          ],
+
+                                        ),
 
                                       ),
-
                                     ),
                                   ),
                                   separatorBuilder:(context,index)=>SizedBox(height: 0,),

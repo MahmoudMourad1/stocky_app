@@ -1,7 +1,9 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:stock_twit/modules/ticker_screen/ticker_screen.dart';
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 
 
 Widget SwiperContainer (Map<String,dynamic> model ,context){
@@ -98,4 +100,79 @@ Widget SwiperContainer (Map<String,dynamic> model ,context){
 
 void NavigateTo (context, widget) => Navigator.push(context,
     MaterialPageRoute(builder:(context)=>widget ));
+
+Widget BuildArticleItem(article,context) => InkWell(
+  onTap: (){
+
+  },
+  child:   Padding(
+
+    padding: const EdgeInsets.all(20.0),
+
+    child: Row(
+
+      children: [
+
+        Container(
+
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            color: Colors.black.withOpacity(0.9),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: FancyShimmerImage(imageUrl:'https://fmpcloud.io/image-stock/${article['symbol']}.png',boxFit: BoxFit.cover,width: 80.0,
+              height: 80.0,errorWidget:SizedBox()),
+          ),
+
+        ),
+
+        SizedBox(width: 20.0,),
+        Expanded(
+          child: Container(
+            height: 50.0,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Text(
+                    '${article['name']}',
+                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0),overflow:TextOverflow.ellipsis,),
+
+                ),
+                Text(
+                  '${article['stockExchange']}',
+                  style: TextStyle(fontSize: 10.0,color: Colors.grey),),
+
+              ],
+
+
+
+            ),
+
+          ),
+
+        )
+
+
+
+      ],
+
+    ),
+
+  ),
+);
+
+Widget articleBuilder(list,context,{isSearch = false})=>ConditionalBuilder(
+    condition: list.isNotEmpty,
+    builder: (context)=> ListView.separated(
+        physics: BouncingScrollPhysics(),
+        itemBuilder: (context,index){
+          print(list.runtimeType);
+          return BuildArticleItem(list[index],context);
+        },
+        separatorBuilder: (context,index)=>SizedBox(height: 10.0,),
+        itemCount: list.length),
+    fallback: (context)=>isSearch ? Container() : Center(child: CircularProgressIndicator()));
 

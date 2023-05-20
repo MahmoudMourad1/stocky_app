@@ -74,3 +74,13 @@ class StockErrorStockSymbolData extends StockStates{
 }
 
 class StockSuccesschangevalue extends StockStates{}
+
+
+
+class StocketSearchLoadingState extends StockStates{}
+class StockSearchSuccessState extends StockStates{}
+class StockSearchErrorState extends StockStates{
+  final String error;
+
+  StockSearchErrorState({required this.error});
+}
