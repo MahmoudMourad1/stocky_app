@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:stock_twit/modules/quote_screen/quote_screen.dart';
 import 'package:stock_twit/modules/ticker_screen/ticker_screen.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 
@@ -106,6 +107,7 @@ void NavigateTo (context, widget) => Navigator.push(context,
 Widget BuildArticleItem(article,context) => InkWell(
   onTap: (){
 
+    NavigateTo(context, QuoteScreen(symbol: article['symbol']));
   },
   child:   Padding(
 

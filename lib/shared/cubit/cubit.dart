@@ -5,6 +5,7 @@ import 'package:stock_twit/models/crypto_model.dart';
 import 'package:stock_twit/models/etf_model.dart';
 import 'package:stock_twit/models/forex_model.dart';
 import 'package:stock_twit/models/news_model.dart';
+import 'package:stock_twit/models/quote_model.dart';
 import 'package:stock_twit/models/stock_model.dart';
 import 'package:stock_twit/models/ticker_model.dart';
 import 'package:stock_twit/shared/cubit/states.dart';
@@ -159,7 +160,7 @@ void changeValue({required String value}){
         query: {
           'query': '$value',
           'limit':'10',
-          'apikey': '88b5300c07698d30c1d98089511a9436',
+          'apikey': 'c17086703ad7c1b7087e9d802ba67d56',
           'exchange':'NASDAQ',
         }).then((value) {
       // print(value.data['articles'][0]['title']);
@@ -173,7 +174,18 @@ void changeValue({required String value}){
   }
 
 
+  QuoteModel? quoteData;
+  void GetQuoteData({required String symbol}){
+    emit(StockLoadingQuoteData());
+    DioHelper.getData(path: 'historical-chart/30min/${symbol}',).then((value) {
 
+      quoteData=QuoteModel.fromJson(value.data);
+      emit(StockSuccessQuoteData());
+    }).catchError((error){
+      print(error.toString());
+      emit(StockErrorQuoteData(error: error.toString()));
+    });
+  }
 
 
 

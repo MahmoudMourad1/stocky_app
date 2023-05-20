@@ -85,3 +85,10 @@ class StockSearchErrorState extends StockStates{
 
   StockSearchErrorState({required this.error});
 }
+
+class StockSuccessQuoteData extends StockStates{}
+class StockLoadingQuoteData extends StockStates{}
+class StockErrorQuoteData extends StockStates{
+  final String error;
+  StockErrorQuoteData({required this.error});
+}

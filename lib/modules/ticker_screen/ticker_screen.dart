@@ -198,7 +198,23 @@ class TickerScreen extends StatelessWidget {
            DateTime(2022,04, 10),
 
          ];
+       }else if(ticker?.symbol=='AAPL'){
+         // 2022-01-13
+         // 2022-04-11
+         // 2022-10-17
+         StockCubit.get(context).drop=<DateTime>[
+           DateTime(2021, 07, 02),
+           DateTime(2021,11, 23),
+           DateTime(2022,05, 10),
+           DateTime(2022,07, 22),
+           DateTime(2022,09, 19),
+           DateTime(2022,12, 20),
+           DateTime(2023,01, 27),
+           DateTime(2023,03, 20),
+
+         ];
        }
+
 
 
        final List<ChartData> chartData = [];
@@ -220,36 +236,39 @@ class TickerScreen extends StatelessWidget {
 
                   children: [
                     //Instead of appbar
-                   Container(
-                     height: 80,
-                     color: Colors.transparent,
-                     child: Stack(
-                       children: [
-                         Center(
-                          child: CachedNetworkImage(
-                             imageUrl: "https://fmpcloud.io/image-stock/${ticker!.symbol}.png",
-                             placeholder: (context, url) => new CircularProgressIndicator(),
-                             errorWidget: (context, url, error) => new Icon(Icons.error),
-                             color: ticker.symbol=='AAPL'||ticker.symbol=='V'? Colors.black.withOpacity(0.78):null,
-                             height: 80,
-                             width: 80,
-                             fit: BoxFit.cover,
-                           ),
-                         ),
-                         Positioned
-                           (child: Padding(
-                             padding: const EdgeInsets.all(10.0),
-                             child: Container(
-                             decoration: BoxDecoration(
-                               borderRadius: BorderRadius.circular(50.0),
-                               color: Colors.grey.shade200.withOpacity(0.7),
+                   Padding(
+                     padding: const EdgeInsets.symmetric(vertical: 10.0),
+                     child: Container(
+                       height: 80,
+                       color: Colors.transparent,
+                       child: Stack(
+                         children: [
+                           Center(
+                            child: CachedNetworkImage(
+                               imageUrl: "https://fmpcloud.io/image-stock/${ticker!.symbol}.png",
+                               placeholder: (context, url) => new CircularProgressIndicator(),
+                               errorWidget: (context, url, error) => new Icon(Icons.error),
+                               color: ticker.symbol=='AAPL'||ticker.symbol=='V'? Colors.black.withOpacity(0.78):null,
+                               height: 80,
+                               width: 80,
+                               fit: BoxFit.cover,
                              ),
-                             child: IconButton(onPressed: (){
-                               Navigator.pop(context);
-                             }, icon: Icon(Icons.arrow_back)),
-                         ),
-                           ),)
-                       ],
+                           ),
+                           Positioned
+                             (child: Padding(
+                               padding: const EdgeInsets.all(10.0),
+                               child: Container(
+                               decoration: BoxDecoration(
+                                 borderRadius: BorderRadius.circular(50.0),
+                                 color: Colors.grey.shade200.withOpacity(0.7),
+                               ),
+                               child: IconButton(onPressed: (){
+                                 Navigator.pop(context);
+                               }, icon: Icon(Icons.arrow_back)),
+                           ),
+                             ),)
+                         ],
+                       ),
                      ),
                    ),
 

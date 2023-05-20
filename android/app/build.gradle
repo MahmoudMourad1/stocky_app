@@ -52,7 +52,11 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
-
+    android {
+        defaultConfig {
+            minSdkVersion 19
+        }
+    }
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
