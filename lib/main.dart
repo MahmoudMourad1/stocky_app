@@ -52,6 +52,7 @@ class MyApp extends StatelessWidget {
           splash:Column(
             children: [
                CircleAvatar(
+                 backgroundColor: Colors.transparent,
                 radius: 100,
                 backgroundImage: AssetImage("assets/rm373batch9-021.jpg"),
               ),

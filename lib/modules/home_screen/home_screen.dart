@@ -8,6 +8,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:scroll_loop_auto_scroll/scroll_loop_auto_scroll.dart';
 import 'package:stock_twit/models/stock_model.dart';
 import 'package:stock_twit/modules/crypto_screen/crypto_screen.dart';
 import 'package:stock_twit/modules/etf_screen/etf_screen.dart';
@@ -81,7 +82,9 @@ class HomeScreen extends StatelessWidget {
                       height: 30,
                       child: ConditionalBuilder(
                         condition: StockCubit.get(context).mostGainerData?.data!=null,
-                        builder: (context)=>AutoScrollToPBar(StockCubit.get(context).mostGainerData!),
+                        builder: (context)=>  AutoScrollToPBar(StockCubit.get(context).mostGainerData!),
+
+
                         fallback: (context)=>Container(width: double.infinity,),
                       )
                   ),
@@ -213,16 +216,31 @@ class HomeScreen extends StatelessWidget {
     ).toList(),
 
     options: CarouselOptions(
+      pageSnapping: false,
         height: 380.0,
         viewportFraction: 0.5,
         initialPage: 0,
         enableInfiniteScroll: true,
         reverse: true,
         autoPlay: true,
-        autoPlayInterval: Duration(milliseconds: 1000),
+        pauseAutoPlayOnManualNavigate: true,
+
+        scrollPhysics: AlwaysScrollableScrollPhysics(),
+        autoPlayInterval: Duration(milliseconds: 1900),
         autoPlayAnimationDuration: Duration(milliseconds: 2000),
         autoPlayCurve: Curves.linear,
         scrollDirection: Axis.horizontal
+
+    //      height: 380.0,
+      //         viewportFraction: 0.5,
+      //         initialPage: 0,
+      //         enableInfiniteScroll: true,
+      //         reverse: true,
+      //         autoPlay: true,
+      //         autoPlayInterval: Duration(milliseconds: 1000),
+      //         autoPlayAnimationDuration: Duration(milliseconds: 2000),
+      //         autoPlayCurve: Curves.linear,
+      //         scrollDirection: Axis.horizontal
     ),
   );
 
