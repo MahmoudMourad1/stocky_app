@@ -364,7 +364,7 @@ class TickerScreen extends StatelessWidget {
 
                     Container(
                         alignment: Alignment.centerLeft,
-                        padding: EdgeInsets.all(20.0),
+                        padding: EdgeInsets.all(10.0),
                         child: Text('Statistics',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w600,color: Colors.blueGrey),)),
 
                     // ListView.separated(
@@ -545,6 +545,7 @@ class Statistics {
 
 class EmployeeDataSource extends DataGridSource {
   EmployeeDataSource({required List<Statistics> statistics}) {
+
     dataGridRows = statistics
         .map<DataGridRow>((dataGridRow) => DataGridRow(cells: [
       DataGridCell<dynamic>(columnName: 'Date', value: dataGridRow.date),
@@ -568,7 +569,16 @@ class EmployeeDataSource extends DataGridSource {
 
   @override
   DataGridRowAdapter? buildRow(DataGridRow row) {
+    Color getRowBackgroundColor() {
+      final int index = effectiveRows.indexOf(row);
+      if (index == 5) {
+        return Colors.blueGrey[100]!;
+      }
+
+      return Colors.transparent;
+    }
     return DataGridRowAdapter(
+        color: getRowBackgroundColor(),
         cells: row.getCells().map<Widget>((dataGridCell) {
           return Container(
               alignment: Alignment.center,

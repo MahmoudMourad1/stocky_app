@@ -4,6 +4,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'dart:ui';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -177,7 +178,7 @@ class HomeScreen extends StatelessWidget {
                                   ),
                                   separatorBuilder:(context,index)=>SizedBox(height: 0,),
                                   itemCount: StockCubit.get(context).newsData!.data.length),
-                              fallback: (context)=>Container(height: 300, child: CircularProgressIndicator(),)),
+                              fallback: (context)=>Container(height: 300, child: SizedBox())),
                         ),
 
                       ],
@@ -282,13 +283,8 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              CachedNetworkImage(
-                imageUrl:categoryImg[index] ,
-                placeholder: (context, url) => new CircularProgressIndicator(),
-                errorWidget: (context, url, error) => new Icon(Icons.error),
-                height: 50,
-                width: 50,
-              ),
+              FancyShimmerImage(imageUrl:categoryImg[index],boxFit: BoxFit.fitHeight,width: 50.0,
+                  height: 50.0,errorWidget:SizedBox()),
               SizedBox(height: 10.0,),
               Text(B[index],style: TextStyle(color:Colors.black,fontWeight:FontWeight.bold),)
             ],

@@ -160,7 +160,8 @@ void changeValue({required String value}){
         query: {
           'query': '$value',
           'limit':'10',
-          'apikey': 'c17086703ad7c1b7087e9d802ba67d56',
+          'apikey': 'ee7601bb0b119225976228ed279c7cd5',
+          //ee7601bb0b119225976228ed279c7cd5
           'exchange':'NASDAQ',
         }).then((value) {
       // print(value.data['articles'][0]['title']);
@@ -177,15 +178,30 @@ void changeValue({required String value}){
   QuoteModel? quoteData;
   void GetQuoteData({required String symbol}){
     emit(StockLoadingQuoteData());
-    DioHelper.getData(path: 'historical-chart/30min/${symbol}',).then((value) {
+    DioHelper.getData(path: 'historical-price-full/${symbol}',
+    query: {
+      'from': '2023-01-01',
+    }).then((value) {
 
-      quoteData=QuoteModel.fromJson(value.data);
+      quoteData=QuoteModel.fromJson(value.data['historical']);
       emit(StockSuccessQuoteData());
     }).catchError((error){
       print(error.toString());
       emit(StockErrorQuoteData(error: error.toString()));
     });
   }
+//    QuoteModel? quoteData;
+//   void GetQuoteData({required String symbol}){
+//     emit(StockLoadingQuoteData());
+//     DioHelper.getData(path: 'historical-chart/30min/${symbol}',).then((value) {
+//
+//       quoteData=QuoteModel.fromJson(value.data);
+//       emit(StockSuccessQuoteData());
+//     }).catchError((error){
+//       print(error.toString());
+//       emit(StockErrorQuoteData(error: error.toString()));
+//     });
+//   }
 
 
 
