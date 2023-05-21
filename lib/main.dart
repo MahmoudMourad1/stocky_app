@@ -1,3 +1,4 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +7,7 @@ import 'package:stock_twit/modules/home_screen/home_screen.dart';
 import 'package:stock_twit/shared/bloc_observer.dart';
 import 'package:stock_twit/shared/cubit/cubit.dart';
 import 'package:stock_twit/shared/network/remote/dio_helpers.dart';
+import 'package:page_transition/page_transition.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,7 +41,26 @@ class MyApp extends StatelessWidget {
         ),
 
         debugShowCheckedModeBanner: false,
-        home: HomeScreen(),
+        home: AnimatedSplashScreen(
+          splashIconSize: 300,
+          backgroundColor: Colors.black,
+
+          pageTransitionType: PageTransitionType.leftToRight,
+          splashTransition: SplashTransition.sizeTransition,
+          curve: Curves.linear,
+
+          splash:Column(
+            children: [
+               CircleAvatar(
+                radius: 100,
+                backgroundImage: AssetImage("assets/rm373batch9-021.jpg"),
+              ),
+              SizedBox(height: 10,),
+              Text('STOCK MARKET',style: TextStyle(fontSize: 30,fontWeight: FontWeight.w900,color: Colors.white),)
+            ],
+          ) ,
+          nextScreen: HomeScreen(),
+        ),
       ),
     );
   }

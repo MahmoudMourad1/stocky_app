@@ -160,7 +160,7 @@ void changeValue({required String value}){
         query: {
           'query': '$value',
           'limit':'10',
-          'apikey': 'ee7601bb0b119225976228ed279c7cd5',
+          'apikey': '620aea5ea3c274fa0b2e0ceb29a22fe9',
           //ee7601bb0b119225976228ed279c7cd5
           'exchange':'NASDAQ',
         }).then((value) {
