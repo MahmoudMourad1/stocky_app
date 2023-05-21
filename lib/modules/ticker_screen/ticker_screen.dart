@@ -225,7 +225,7 @@ class TickerScreen extends StatelessWidget {
        List<ChartData> chartDat=List.from(chartData.reversed);
        final List<Statistics> statistics = [];
        StockCubit.get(context).tickerData?.data.forEach((element) {
-         statistics.add(Statistics(element.date, element.high, element.low, element.close, element.change));
+         statistics.add(Statistics(element.date, element.open,element.high, element.low, element.close,element.volume ,element.change));
        });
        late EmployeeDataSource _employeeDataSource;
        _employeeDataSource = EmployeeDataSource(statistics: statistics);
@@ -237,6 +237,7 @@ class TickerScreen extends StatelessWidget {
               fallback: (context)=>Center(child: CircularProgressIndicator(),),
               builder: (context)=>SingleChildScrollView(
                 scrollDirection: Axis.vertical,
+                physics: BouncingScrollPhysics(),
                 child: Column(
 
 
@@ -437,21 +438,33 @@ class TickerScreen extends StatelessWidget {
                       selectionMode: SelectionMode.multiple,
                       allowSorting: true,
 
+                      allowTriStateSorting: true,
+                      defaultColumnWidth: 80,
                       columns: [
                         GridColumn(
+
                             columnName: 'date',
                             label: Container(
-                                alignment: Alignment.centerRight,
 
+                              alignment: Alignment.center,
                                 child: Text(
                                   'DATE',
+                                  overflow: TextOverflow.ellipsis,
+                                ))),
+                        GridColumn(
+                            columnName: 'open',
+                            label: Container(
+
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'open',
                                   overflow: TextOverflow.ellipsis,
                                 ))),
                         GridColumn(
                             columnName: 'high',
                             label: Container(
 
-                                alignment: Alignment.centerRight,
+                                alignment: Alignment.center,
                                 child: Text(
                                   'high',
                                   overflow: TextOverflow.ellipsis,
@@ -460,7 +473,7 @@ class TickerScreen extends StatelessWidget {
                             columnName: 'low',
                             label: Container(
 
-                              alignment: Alignment.centerRight,
+                                alignment: Alignment.center,
 
                                 child: Text(
                                   'low',
@@ -470,15 +483,24 @@ class TickerScreen extends StatelessWidget {
                             columnName: 'close',
                             label: Container(
 
-                                alignment: Alignment.centerRight,
+                                alignment: Alignment.center,
                                 child: Text(
                                   'close',
                                   overflow: TextOverflow.ellipsis,
                                 ))),
                         GridColumn(
+                            columnName: 'volume',
+                            label: Container(
+
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'volume',
+                                  overflow: TextOverflow.ellipsis,
+                                ))),
+                        GridColumn(
                             columnName: 'change',
                             label: Container(
-                                alignment: Alignment.centerRight,
+                                alignment: Alignment.center,
 
                                 child: Text(
                                   'change',
@@ -486,6 +508,7 @@ class TickerScreen extends StatelessWidget {
                                 ))),
                       ],
                     ),
+                    SizedBox(height: 10,),
 
                   ],
                 ),
@@ -510,11 +533,13 @@ class ChartData {
 }
 
 class Statistics {
-  Statistics(this.date, this.high, this.low, this.close,this.change);
+  Statistics(this.date,this.open ,this.high, this.low, this.close,this.volume,this.change);
   final dynamic date;
+  final dynamic open;
   final dynamic high;
   final dynamic low;
   final dynamic close;
+  final dynamic volume;
   final dynamic change;
 }
 
@@ -523,11 +548,13 @@ class EmployeeDataSource extends DataGridSource {
     dataGridRows = statistics
         .map<DataGridRow>((dataGridRow) => DataGridRow(cells: [
       DataGridCell<dynamic>(columnName: 'Date', value: dataGridRow.date),
+      DataGridCell<dynamic>(columnName: 'open', value: dataGridRow.open),
       DataGridCell<dynamic>(columnName: 'high', value: dataGridRow.high),
       DataGridCell<dynamic>(
           columnName: 'low', value: dataGridRow.low),
       DataGridCell<dynamic>(
           columnName: 'close', value: dataGridRow.close),
+      DataGridCell<dynamic>(columnName: 'volume', value: dataGridRow.volume),
       DataGridCell<dynamic>(
           columnName: 'change', value: dataGridRow.change),
     ]))
@@ -544,10 +571,7 @@ class EmployeeDataSource extends DataGridSource {
     return DataGridRowAdapter(
         cells: row.getCells().map<Widget>((dataGridCell) {
           return Container(
-              alignment: (dataGridCell.columnName == 'date' ||
-                  dataGridCell.columnName == 'change')
-                  ? Alignment.centerRight
-                  : Alignment.centerRight,
+              alignment: Alignment.center,
 
               child: Text(
                 dataGridCell.value.toString(),
