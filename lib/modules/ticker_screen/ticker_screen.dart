@@ -8,6 +8,7 @@ import 'package:stock_twit/models/ticker_model.dart';
 import 'package:stock_twit/shared/cubit/cubit.dart';
 import 'package:stock_twit/shared/cubit/states.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class TickerScreen extends StatelessWidget {
   const TickerScreen({
@@ -222,7 +223,12 @@ class TickerScreen extends StatelessWidget {
          chartData.add(ChartData(element.date, element.open, element.date==StockCubit.get(context).dropdownValue?(element.change>0?Colors.green:Colors.red):Colors.grey.shade400));
        });
        List<ChartData> chartDat=List.from(chartData.reversed);
-
+       final List<Statistics> statistics = [];
+       StockCubit.get(context).tickerData?.data.forEach((element) {
+         statistics.add(Statistics(element.date, element.high, element.low, element.close, element.change));
+       });
+       late EmployeeDataSource _employeeDataSource;
+       _employeeDataSource = EmployeeDataSource(statistics: statistics);
         return Scaffold(
           backgroundColor: Colors.white,
           body: SafeArea(
@@ -360,71 +366,127 @@ class TickerScreen extends StatelessWidget {
                         padding: EdgeInsets.all(20.0),
                         child: Text('Statistics',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w600,color: Colors.blueGrey),)),
 
-                    ListView.separated(
+                    // ListView.separated(
+                    //
+                    //     reverse: true,
+                    //   physics: NeverScrollableScrollPhysics(),
+                    //     shrinkWrap: true,
+                    //     itemBuilder: (context,index){
+                    //       return Padding(
+                    //         padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    //         child: Container(
+                    //           height: 150,
+                    //           decoration: BoxDecoration(
+                    //             color: Colors.white,
+                    //               boxShadow: [
+                    //                 BoxShadow(
+                    //                   blurStyle: BlurStyle.inner,
+                    //                     color: Colors.grey.shade600,
+                    //                     spreadRadius: 0.5,
+                    //                     blurRadius: 10
+                    //                 )
+                    //               ]
+                    //           ),
+                    //           child: Padding(
+                    //             padding: const EdgeInsets.all(20.0),
+                    //             child: Row(
+                    //               children: [
+                    //                 Column(children: [
+                    //                   Text('open',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
+                    //                   SizedBox(height: 4,),
+                    //                   Text('${ticker.data[index].open}',style: TextStyle(color: Colors.yellow,fontSize: 20,fontWeight: FontWeight.w900),),
+                    //                   Spacer(),
+                    //                   Text('close',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
+                    //                   SizedBox(height: 4,),
+                    //                   Text('${ticker.data[index].close}',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.w900),),
+                    //                 ],),
+                    //                 Spacer(),
+                    //                 Column(children: [
+                    //                   Text('high',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
+                    //                   SizedBox(height: 4,),
+                    //                   Text('${ticker.data[index].high}',style: TextStyle(color: Colors.pinkAccent,fontSize: 20,fontWeight: FontWeight.w900),),
+                    //                   Spacer(),
+                    //                   Text('Avg.Volume',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
+                    //                   SizedBox(height: 4,),
+                    //                   Text('${ticker.data[index].vwap}',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.w900),),
+                    //                 ],),
+                    //                 Spacer(),
+                    //                 Column(children: [
+                    //                   Text('low',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
+                    //                   SizedBox(height: 4,),
+                    //                   Text('${ticker.data[index].low}',style: TextStyle(color: Colors.lightBlueAccent,fontSize: 20,fontWeight: FontWeight.w900),),
+                    //                   Spacer(),
+                    //                   Text('change',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
+                    //                   SizedBox(height: 4,),
+                    //                   Text('${ticker.data[index].change}',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.w900),),
+                    //                 ],),
+                    //               ],
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       );
+                    //     },
+                    //     separatorBuilder: (context,index)=>Padding(
+                    //       padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 10),
+                    //       child: Text('${ticker.data[index].date}',style: TextStyle(fontSize: 15),),
+                    //     ),
+                    //     itemCount: ticker.data.length)
 
-                        reverse: true,
-                      physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemBuilder: (context,index){
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: Container(
-                              height: 150,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurStyle: BlurStyle.inner,
-                                        color: Colors.grey.shade600,
-                                        spreadRadius: 0.5,
-                                        blurRadius: 10
-                                    )
-                                  ]
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Row(
-                                  children: [
-                                    Column(children: [
-                                      Text('open',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
-                                      SizedBox(height: 4,),
-                                      Text('${ticker.data[index].open}',style: TextStyle(color: Colors.yellow,fontSize: 20,fontWeight: FontWeight.w900),),
-                                      Spacer(),
-                                      Text('close',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
-                                      SizedBox(height: 4,),
-                                      Text('${ticker.data[index].close}',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.w900),),
-                                    ],),
-                                    Spacer(),
-                                    Column(children: [
-                                      Text('high',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
-                                      SizedBox(height: 4,),
-                                      Text('${ticker.data[index].high}',style: TextStyle(color: Colors.pinkAccent,fontSize: 20,fontWeight: FontWeight.w900),),
-                                      Spacer(),
-                                      Text('Avg.Volume',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
-                                      SizedBox(height: 4,),
-                                      Text('${ticker.data[index].vwap}',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.w900),),
-                                    ],),
-                                    Spacer(),
-                                    Column(children: [
-                                      Text('low',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
-                                      SizedBox(height: 4,),
-                                      Text('${ticker.data[index].low}',style: TextStyle(color: Colors.lightBlueAccent,fontSize: 20,fontWeight: FontWeight.w900),),
-                                      Spacer(),
-                                      Text('change',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
-                                      SizedBox(height: 4,),
-                                      Text('${ticker.data[index].change}',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.w900),),
-                                    ],),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                        separatorBuilder: (context,index)=>Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 10),
-                          child: Text('${ticker.data[index].date}',style: TextStyle(fontSize: 15),),
-                        ),
-                        itemCount: ticker.data.length)
+                    SfDataGrid(
+                      source: _employeeDataSource,
+                      selectionMode: SelectionMode.multiple,
+                      allowSorting: true,
+
+                      columns: [
+                        GridColumn(
+                            columnName: 'date',
+                            label: Container(
+                                alignment: Alignment.centerRight,
+
+                                child: Text(
+                                  'DATE',
+                                  overflow: TextOverflow.ellipsis,
+                                ))),
+                        GridColumn(
+                            columnName: 'high',
+                            label: Container(
+
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  'high',
+                                  overflow: TextOverflow.ellipsis,
+                                ))),
+                        GridColumn(
+                            columnName: 'low',
+                            label: Container(
+
+                              alignment: Alignment.centerRight,
+
+                                child: Text(
+                                  'low',
+                                  overflow: TextOverflow.ellipsis,
+                                ))),
+                        GridColumn(
+                            columnName: 'close',
+                            label: Container(
+
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  'close',
+                                  overflow: TextOverflow.ellipsis,
+                                ))),
+                        GridColumn(
+                            columnName: 'change',
+                            label: Container(
+                                alignment: Alignment.centerRight,
+
+                                child: Text(
+                                  'change',
+                                  overflow: TextOverflow.ellipsis,
+                                ))),
+                      ],
+                    ),
+
                   ],
                 ),
               ),
@@ -447,3 +509,50 @@ class ChartData {
   final Color color;
 }
 
+class Statistics {
+  Statistics(this.date, this.high, this.low, this.close,this.change);
+  final dynamic date;
+  final dynamic high;
+  final dynamic low;
+  final dynamic close;
+  final dynamic change;
+}
+
+class EmployeeDataSource extends DataGridSource {
+  EmployeeDataSource({required List<Statistics> statistics}) {
+    dataGridRows = statistics
+        .map<DataGridRow>((dataGridRow) => DataGridRow(cells: [
+      DataGridCell<dynamic>(columnName: 'Date', value: dataGridRow.date),
+      DataGridCell<dynamic>(columnName: 'high', value: dataGridRow.high),
+      DataGridCell<dynamic>(
+          columnName: 'low', value: dataGridRow.low),
+      DataGridCell<dynamic>(
+          columnName: 'close', value: dataGridRow.close),
+      DataGridCell<dynamic>(
+          columnName: 'change', value: dataGridRow.change),
+    ]))
+        .toList();
+  }
+
+  List<DataGridRow> dataGridRows = [];
+
+  @override
+  List<DataGridRow> get rows => dataGridRows;
+
+  @override
+  DataGridRowAdapter? buildRow(DataGridRow row) {
+    return DataGridRowAdapter(
+        cells: row.getCells().map<Widget>((dataGridCell) {
+          return Container(
+              alignment: (dataGridCell.columnName == 'date' ||
+                  dataGridCell.columnName == 'change')
+                  ? Alignment.centerRight
+                  : Alignment.centerRight,
+
+              child: Text(
+                dataGridCell.value.toString(),
+                overflow: TextOverflow.ellipsis,
+              ));
+        }).toList());
+  }
+}
