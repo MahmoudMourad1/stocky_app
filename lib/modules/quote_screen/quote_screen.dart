@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:stock_twit/models/quote_model.dart';
 import 'package:stock_twit/shared/cubit/cubit.dart';
 import 'package:stock_twit/shared/cubit/states.dart';
@@ -28,73 +29,99 @@ class QuoteScreen extends StatelessWidget {
              StockCubit.get(context).quoteData?.data.forEach((element) {
                chartData.add(ChartData(element.open, element.high, element.low, element.close,DateTime.parse(element.date)));
              });
+             late ZoomPanBehavior _zoomPanBehavior;
+             _zoomPanBehavior = ZoomPanBehavior(
 
+                 enableDoubleTapZooming: true,
+                 enablePinching: true,
+                 // Enables the selection zooming
+                 enableSelectionZooming: true
+             );
              print(chartData.length);
              return SafeArea(child: Scaffold(
 
+               backgroundColor: Colors.white,
                body:SingleChildScrollView(
                  child: Column(
                    children: [
-                     Padding(
-                       padding: const EdgeInsets.symmetric(vertical:10.0),
-                       child: Container(
-                         height: 80,
-                         color: Colors.transparent,
-                         child: Stack(
-                           children: [
-                             Center(
-                               child: CachedNetworkImage(
-                                 imageUrl: "https://fmpcloud.io/image-stock/${symbol}.png",
-                                 placeholder: (context, url) => new CircularProgressIndicator(),
-                                 errorWidget: (context, url, error) => new Icon(Icons.error),
+                     Container(
+                       decoration: BoxDecoration(
+                         color: Colors.black,
+                         borderRadius: BorderRadius.only(bottomRight: Radius.circular(90))
+                       ),
 
-                                 height: 80,
-                                 width: 80,
-                                 fit: BoxFit.cover,
+                       child: Column(
+                         children: [
+                           SizedBox(height:20),
+                           Padding(
+                             padding: const EdgeInsets.symmetric(vertical:10.0),
+                             child: Container(
+                               height: 80,
+                               color: Colors.transparent,
+                               child: Stack(
+                                 children: [
+                                   Center(
+                                     child: CachedNetworkImage(
+                                       imageUrl: "https://fmpcloud.io/image-stock/${symbol}.png",
+                                       placeholder: (context, url) => new CircularProgressIndicator(),
+                                       errorWidget: (context, url, error) => new Icon(Icons.error),
+
+                                       height: 80,
+                                       width: 80,
+                                       fit: BoxFit.cover,
+                                     ),
+                                   ),
+                                   Positioned
+                                     (child: Padding(
+                                     padding: const EdgeInsets.all(10.0),
+                                     child: Container(
+                                       decoration: BoxDecoration(
+                                         borderRadius: BorderRadius.circular(50.0),
+                                         color: Colors.grey.shade200.withOpacity(0.7),
+                                       ),
+                                       child: IconButton(onPressed: (){
+                                         Navigator.pop(context);
+                                       }, icon: Icon(Icons.arrow_back)),
+                                     ),
+                                   ),)
+                                 ],
                                ),
                              ),
-                             Positioned
-                               (child: Padding(
-                               padding: const EdgeInsets.all(10.0),
+                           ),
+                           SizedBox(height:20),
+                           Padding(
+                             padding: const EdgeInsets.all(2.0),
+                             child:  Center(
                                child: Container(
-                                 decoration: BoxDecoration(
-                                   borderRadius: BorderRadius.circular(50.0),
-                                   color: Colors.grey.shade200.withOpacity(0.7),
-                                 ),
-                                 child: IconButton(onPressed: (){
-                                   Navigator.pop(context);
-                                 }, icon: Icon(Icons.arrow_back)),
-                               ),
-                             ),)
-                           ],
-                         ),
-                       ),
-                     ),
-                     Center(
-                         child: Container(
-                             child: SfCartesianChart(
-                                 primaryXAxis: DateTimeAxis(),
-                                 series: <ChartSeries>[
-                                   // Renders CandleSeries
-                                   CandleSeries<ChartData, DateTime>(
-                                     dataSource: chartData,
-                                     xValueMapper: (ChartData data, _) => data.date,
-                                     lowValueMapper: (ChartData data, _) => data.low,
-                                     highValueMapper: (ChartData data, _) => data.high,
-                                     openValueMapper: (ChartData data, _) => data.open,
-                                     closeValueMapper: (ChartData data, _) => data.close,
+                                   child: SfCartesianChart(
+                                       zoomPanBehavior: _zoomPanBehavior,
+                                     primaryXAxis: DateTimeAxis(),
+                                       series: <ChartSeries>[
+                                         // Renders CandleSeries
+                                         CandleSeries<ChartData, DateTime>(
+                                           dataSource: chartData,
+                                           xValueMapper: (ChartData data, _) => data.date,
+                                           lowValueMapper: (ChartData data, _) => data.low,
+                                           highValueMapper: (ChartData data, _) => data.high,
+                                           openValueMapper: (ChartData data, _) => data.open,
+                                           closeValueMapper: (ChartData data, _) => data.close,
 
+                                         )
+                                       ]
                                    )
-                                 ]
-                             )
-                         ),
+                               ),
 
+                             ),
+                           ),
+                           SizedBox(height: 60,),
+                         ],
+                       ),
                      ),
                      Container(
                          alignment: Alignment.centerLeft,
                          padding: EdgeInsets.all(20.0),
                          child: Text('Statistics',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w600,color: Colors.blueGrey),)),
-                     SizedBox(height: 10,),
+
                      Padding(
                        padding: const EdgeInsets.all(10.0),
                        child: Container(

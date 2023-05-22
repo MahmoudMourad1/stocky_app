@@ -508,7 +508,7 @@ class TickerScreen extends StatelessWidget {
                                 ))),
                       ],
                     ),
-                    SizedBox(height: 10,),
+
 
                   ],
                 ),

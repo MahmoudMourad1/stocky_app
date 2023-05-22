@@ -9,6 +9,8 @@ import 'package:stock_twit/shared/cubit/cubit.dart';
 import 'package:stock_twit/shared/network/remote/dio_helpers.dart';
 import 'package:page_transition/page_transition.dart';
 
+import 'modules/home_screen/splash_screen.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
@@ -42,24 +44,12 @@ class MyApp extends StatelessWidget {
 
         debugShowCheckedModeBanner: false,
         home: AnimatedSplashScreen(
-          splashIconSize: 300,
-          backgroundColor: Colors.black,
+          splashIconSize: double.infinity,
 
-          pageTransitionType: PageTransitionType.leftToRight,
-          splashTransition: SplashTransition.sizeTransition,
-          curve: Curves.linear,
 
-          splash:Column(
-            children: [
-               CircleAvatar(
-                 backgroundColor: Colors.transparent,
-                radius: 100,
-                backgroundImage: AssetImage("assets/rm373batch9-021.jpg"),
-              ),
-              SizedBox(height: 10,),
-              Text('STOCK MARKET',style: TextStyle(fontSize: 30,fontWeight: FontWeight.w900,color: Colors.white),)
-            ],
-          ) ,
+
+
+          splash:SplashScreen(),
           nextScreen: HomeScreen(),
         ),
       ),
