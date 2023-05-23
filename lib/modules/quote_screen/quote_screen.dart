@@ -1,8 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:stock_twit/models/quote_model.dart';
+import 'package:stock_twit/modules/quote_screen/custom_dateScreen.dart';
+import 'package:stock_twit/shared/components/components.dart';
 import 'package:stock_twit/shared/cubit/cubit.dart';
 import 'package:stock_twit/shared/cubit/states.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -14,7 +17,6 @@ class QuoteScreen extends StatelessWidget {
   });
 
   final String symbol;
-
 
   @override
   Widget build(BuildContext context) {
@@ -38,16 +40,18 @@ class QuoteScreen extends StatelessWidget {
                  enableSelectionZooming: true
              );
              print(chartData.length);
+             List<String> statistic=['Open','High','Low','Close'];
+             List<dynamic> statisticsdata=[quote?.data[0].open,quote?.data[0].high,quote?.data[0].low,quote?.data[0].close];
              return SafeArea(child: Scaffold(
 
                backgroundColor: Colors.white,
                body:SingleChildScrollView(
-                 child: Column(
+                 child:Column(
                    children: [
                      Container(
                        decoration: BoxDecoration(
-                         color: Colors.black,
-                         borderRadius: BorderRadius.only(bottomRight: Radius.circular(90))
+                           color: Colors.black,
+                           borderRadius: BorderRadius.only(bottomRight: Radius.circular(90))
                        ),
 
                        child: Column(
@@ -94,8 +98,20 @@ class QuoteScreen extends StatelessWidget {
                              child:  Center(
                                child: Container(
                                    child: SfCartesianChart(
+                                       borderColor: Colors.black,
+                                       borderWidth: 0,
+                                       plotAreaBorderWidth: 0,
                                        zoomPanBehavior: _zoomPanBehavior,
-                                     primaryXAxis: DateTimeAxis(),
+                                       primaryXAxis: DateTimeAxis(
+                                         majorGridLines: MajorGridLines(width: 0),
+
+
+                                       ),
+
+                                       primaryYAxis: NumericAxis(
+                                         majorGridLines: MajorGridLines(width: 0),
+
+                                       ),
                                        series: <ChartSeries>[
                                          // Renders CandleSeries
                                          CandleSeries<ChartData, DateTime>(
@@ -117,64 +133,122 @@ class QuoteScreen extends StatelessWidget {
                          ],
                        ),
                      ),
-                     Container(
-                         alignment: Alignment.centerLeft,
-                         padding: EdgeInsets.all(20.0),
-                         child: Text('Statistics',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w600,color: Colors.blueGrey),)),
-
-                     Padding(
-                       padding: const EdgeInsets.all(10.0),
-                       child: Container(
-                         height: 150,
-                         decoration: BoxDecoration(
-                             color: Colors.white,
-                             boxShadow: [
-                               BoxShadow(
-                                   blurStyle: BlurStyle.inner,
-                                   color: Colors.grey.shade600,
-                                   spreadRadius: 0.5,
-                                   blurRadius: 10
-                               )
-                             ]
-                         ),
-                         child: Padding(
-                           padding: const EdgeInsets.all(10.0),
-                           child: Row(
-                             children: [
-                               Column(children: [
-                                 Text('open',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
-                                 SizedBox(height: 4,),
-                                 Text('${quote?.data[0].open}',style: TextStyle(color: Colors.yellow,fontSize: 20,fontWeight: FontWeight.w900),),
-                                 Spacer(),
-                                 Text('close',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
-                                 SizedBox(height: 4,),
-                                 Text('${quote?.data[0].close}',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.w900),),
-                               ],),
-                               Spacer(),
-                               Column(children: [
-                                 Text('high',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
-                                 SizedBox(height: 4,),
-                                 Text('${quote?.data[0].high}',style: TextStyle(color: Colors.pinkAccent,fontSize: 20,fontWeight: FontWeight.w900),),
-                                 Spacer(),
-                                 Text('Avg.Volume',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
-                                 SizedBox(height: 4,),
-                                 Text('${quote?.data[0].close}',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.w900),),
-                               ],),
-                               Spacer(),
-                               Column(children: [
-                                 Text('low',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
-                                 SizedBox(height: 4,),
-                                 Text('${quote?.data[0].low}',style: TextStyle(color: Colors.lightBlueAccent,fontSize: 20,fontWeight: FontWeight.w900),),
-                                 Spacer(),
-                                 Text('change',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
-                                 SizedBox(height: 4,),
-                                 Text('${quote?.data[0].high}',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.w900),),
-                               ],),
-                             ],
-                           ),
-                         ),
-                       ),
+                     Row(
+                       children: [
+                         Container(
+                             alignment: Alignment.centerLeft,
+                             padding: EdgeInsets.all(20.0),
+                             child: Text('Statistics',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w600,color: Colors.blueGrey),)),
+                         Spacer(),
+                        ElevatedButton(onPressed: (){
+                          NavigateTo(context, CustomDateScreen());
+                        },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll<Color>(Colors.blueGrey),
+                            ),
+                            child: Text('Custom Date')),
+                         SizedBox(width: 20,),
+                       ],
                      ),
+
+                     // Padding(
+                     //   padding: const EdgeInsets.all(10.0),
+                     //   child: Container(
+                     //     height: 150,
+                     //     decoration: BoxDecoration(
+                     //         color: Colors.white,
+                     //         boxShadow: [
+                     //           BoxShadow(
+                     //               blurStyle: BlurStyle.inner,
+                     //               color: Colors.grey.shade600,
+                     //               spreadRadius: 0.5,
+                     //               blurRadius: 10
+                     //           )
+                     //         ]
+                     //     ),
+                     //     child: Padding(
+                     //       padding: const EdgeInsets.all(10.0),
+                     //       child: Row(
+                     //         children: [
+                     //           Column(children: [
+                     //             Text('open',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
+                     //             SizedBox(height: 4,),
+                     //             Text('${quote?.data[0].open}',style: TextStyle(color: Colors.yellow,fontSize: 20,fontWeight: FontWeight.w900),),
+                     //             Spacer(),
+                     //             Text('close',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
+                     //             SizedBox(height: 4,),
+                     //             Text('${quote?.data[0].close}',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.w900),),
+                     //           ],),
+                     //           Spacer(),
+                     //           Column(children: [
+                     //             Text('high',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
+                     //             SizedBox(height: 4,),
+                     //             Text('${quote?.data[0].high}',style: TextStyle(color: Colors.pinkAccent,fontSize: 20,fontWeight: FontWeight.w900),),
+                     //             Spacer(),
+                     //             Text('Avg.Volume',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
+                     //             SizedBox(height: 4,),
+                     //             Text('${quote?.data[0].close}',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.w900),),
+                     //           ],),
+                     //           Spacer(),
+                     //           Column(children: [
+                     //             Text('low',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
+                     //             SizedBox(height: 4,),
+                     //             Text('${quote?.data[0].low}',style: TextStyle(color: Colors.lightBlueAccent,fontSize: 20,fontWeight: FontWeight.w900),),
+                     //             Spacer(),
+                     //             Text('change',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
+                     //             SizedBox(height: 4,),
+                     //             Text('${quote?.data[0].high}',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.w900),),
+                     //           ],),
+                     //         ],
+                     //       ),
+                     //     ),
+                     //   ),
+                     // ),
+
+                     Container(
+                       height: 120,
+                       child: ListView.separated
+                         ( scrollDirection: Axis.horizontal,
+                           physics: BouncingScrollPhysics(),
+                           itemBuilder: (context,index)=>Container(
+                             width: 120,
+                             height: 120,
+                             decoration: BoxDecoration(
+                               color: Colors.white,
+                               borderRadius: BorderRadius.circular(20),
+                               boxShadow: [
+
+                                 BoxShadow(
+                                   color: Colors.grey.shade300,
+                                   offset: const Offset(
+                                     5.0,
+                                     5.0,
+                                   ),
+                                   blurRadius: 8.0,
+                                   spreadRadius: 2.0,
+                                 ), //BoxShadow
+                                 BoxShadow(
+                                   color: Colors.white,
+                                   offset: const Offset(0.0, 0.0),
+                                   blurRadius: 0.0,
+                                   spreadRadius: 0.0,
+                                 ), //BoxShadow
+                               ],
+                             ),
+                             child:Column(
+
+                               children: [
+                                 SizedBox(height: 15,),
+                                 Text('${statisticsdata[index]}',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w900,color: Colors.black),),
+                                 Spacer(),
+                                 Text('${statistic[index]}',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.w400),),
+                                 SizedBox(height: 15,),
+                               ],
+                             ),
+                           ),
+                           separatorBuilder: (context,index)=>SizedBox(width: 20,),
+                           itemCount: statistic.length),
+                     )
                    ],
                  ),
                ),

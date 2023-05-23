@@ -34,14 +34,14 @@ class StockScreen extends StatelessWidget {
                 tabs: <Widget>[
 
                   Tab(
-                    child: Expanded(child: Text('Top Gainer',style: TextStyle(fontSize: 15,color: Colors.white))),
+                    child: Text('Top Gainer',style: TextStyle(fontSize: 15,color: Colors.white)),
 
                   ),
                   Tab(
-                    child: Expanded(child: Text('Top Loser',style: TextStyle(fontSize: 15,color: Colors.white),)),
+                    child: Text('Top Loser',style: TextStyle(fontSize: 15,color: Colors.white),),
                   ),
                   Tab(
-                    child: Expanded(child: Text('Top Actives',style: TextStyle(fontSize: 15,color: Colors.white))),
+                    child: Text('Top Actives',style: TextStyle(fontSize: 15,color: Colors.white)),
                   ),
                 ],
               ),
@@ -50,8 +50,7 @@ class StockScreen extends StatelessWidget {
 
               ConditionalBuilder(condition: StockCubit.get(context).mostGainerData?.data!=null,
 
-                  builder: (context)=> Expanded(
-                  child: ListView.separated(itemBuilder: (context,index)=>Padding(
+                  builder: (context)=> ListView.separated(itemBuilder: (context,index)=>Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: InkWell(
                       onTap: (){
@@ -78,7 +77,8 @@ class StockScreen extends StatelessWidget {
                               ),
                             ),
                             SizedBox(width: 10,),
-                            Expanded(
+                            Container(
+                              width: 200,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -89,14 +89,16 @@ class StockScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text('\$${StockCubit.get(context).mostGainerData!.data[index].price}',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500,color: Colors.black)),
-                                Spacer(),
-                                Text('${StockCubit.get(context).mostGainerData!.data[index].change}%',style: TextStyle(fontSize: 10,fontWeight: FontWeight.w500,color: Colors.black)),
-                              ],
+                            Spacer(),
+                            Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text('\$${StockCubit.get(context).mostGainerData!.data[index].price}',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500,color: Colors.black)),
+                                  Spacer(),
+                                  Text('${StockCubit.get(context).mostGainerData!.data[index].change}%',style: TextStyle(fontSize: 10,fontWeight: FontWeight.w500,color: Colors.black)),
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -104,11 +106,10 @@ class StockScreen extends StatelessWidget {
                     ),
                   ),
                       separatorBuilder: (context,index)=>SizedBox(height: 5,),
-                      itemCount: StockCubit.get(context).mostGainerData!.data.length)),
+                      itemCount: StockCubit.get(context).mostGainerData!.data.length),
                   fallback: (context)=>Center(child: CircularProgressIndicator(),)),
               ConditionalBuilder(
-                  condition: StockCubit.get(context).mostLoserData?.data!=null, builder: (context)=> Expanded(
-                  child: ListView.separated(itemBuilder: (context,index)=>Padding(
+                  condition: StockCubit.get(context).mostLoserData?.data!=null, builder: (context)=> ListView.separated(itemBuilder: (context,index)=>Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: InkWell(
                       onTap: (){
@@ -135,7 +136,8 @@ class StockScreen extends StatelessWidget {
                               ),
                             ),
                             SizedBox(width: 10,),
-                            Expanded(
+                            Container(
+                              width: 200,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -147,6 +149,7 @@ class StockScreen extends StatelessWidget {
                               ),
                             ),
 
+                            Spacer(),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
@@ -161,63 +164,64 @@ class StockScreen extends StatelessWidget {
                     ),
                   ),
                       separatorBuilder: (context,index)=>SizedBox(height: 5,),
-                      itemCount: StockCubit.get(context).mostLoserData!.data.length)),
+                      itemCount: StockCubit.get(context).mostLoserData!.data.length),
                   fallback: (context)=>Center(child: CircularProgressIndicator(),)),
-             ConditionalBuilder(condition: StockCubit.get(context).mostActivesData?.data!=null, builder: (context)=> Expanded(
-                 child: ListView.separated(itemBuilder: (context,index)=>Padding(
-                   padding: const EdgeInsets.all(20.0),
-                   child: InkWell(
-                     onTap: (){
-                       NavigateTo(context, QuoteScreen(symbol: StockCubit.get(context).mostActivesData!.data[index].symbol!));
-                     },
-                     child: Container(
-                       height: 60,
-                       child: Row(
-                         mainAxisAlignment: MainAxisAlignment.start,
-                         crossAxisAlignment: CrossAxisAlignment.start,
+             ConditionalBuilder(condition: StockCubit.get(context).mostActivesData?.data!=null, builder: (context)=> ListView.separated(itemBuilder: (context,index)=>Padding(
+               padding: const EdgeInsets.all(20.0),
+               child: InkWell(
+                 onTap: (){
+                   NavigateTo(context, QuoteScreen(symbol: StockCubit.get(context).mostActivesData!.data[index].symbol!));
+                 },
+                 child: Container(
+                   height: 60,
+                   child: Row(
+                     mainAxisAlignment: MainAxisAlignment.start,
+                     crossAxisAlignment: CrossAxisAlignment.start,
+                     children: [
+                       Container(
+
+                         padding: EdgeInsets.all(10.0),
+                         decoration: BoxDecoration(
+                           borderRadius: BorderRadius.circular(10.0),
+                           color: Colors.black,
+                         ),
+                         child:FancyShimmerImage(
+                             imageUrl: "https://fmpcloud.io/image-stock/${StockCubit.get(context).mostActivesData!.data[index].symbol}.png",
+
+                             boxFit: BoxFit.cover,width: 40.0,
+                             height: 40.0,errorWidget:SizedBox()
+                         ),
+                       ),
+                       SizedBox(width: 10,),
+                       Container(
+                         width: 200,
+                         child: Column(
+                           crossAxisAlignment: CrossAxisAlignment.start,
+                           children: [
+                             Text('${StockCubit.get(context).mostActivesData!.data[index].symbol}',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w900,color: Colors.black),),
+                             Spacer(),
+                             Text('${StockCubit.get(context).mostActivesData!.data[index].name}',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.6)),overflow: TextOverflow.ellipsis,),
+
+                           ],
+                         ),
+                       ),
+
+                       Spacer(),
+                       Column(
+                         crossAxisAlignment: CrossAxisAlignment.center,
                          children: [
-                           Container(
-
-                             padding: EdgeInsets.all(10.0),
-                             decoration: BoxDecoration(
-                               borderRadius: BorderRadius.circular(10.0),
-                               color: Colors.black,
-                             ),
-                             child:FancyShimmerImage(
-                                 imageUrl: "https://fmpcloud.io/image-stock/${StockCubit.get(context).mostActivesData!.data[index].symbol}.png",
-
-                                 boxFit: BoxFit.cover,width: 40.0,
-                                 height: 40.0,errorWidget:SizedBox()
-                             ),
-                           ),
-                           SizedBox(width: 10,),
-                           Expanded(
-                             child: Column(
-                               crossAxisAlignment: CrossAxisAlignment.start,
-                               children: [
-                                 Text('${StockCubit.get(context).mostActivesData!.data[index].symbol}',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w900,color: Colors.black),),
-                                 Spacer(),
-                                 Text('${StockCubit.get(context).mostActivesData!.data[index].name}',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.6)),overflow: TextOverflow.ellipsis,),
-
-                               ],
-                             ),
-                           ),
-
-                           Column(
-                             crossAxisAlignment: CrossAxisAlignment.center,
-                             children: [
-                               Text('\$${StockCubit.get(context).mostGainerData!.data[index].price}',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.black)),
-                               Spacer(),
-                               Text('${StockCubit.get(context).mostGainerData!.data[index].change}%',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500,color: Colors.black)),
-                             ],
-                           ),
+                           Text('\$${StockCubit.get(context).mostGainerData!.data[index].price}',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.black)),
+                           Spacer(),
+                           Text('${StockCubit.get(context).mostGainerData!.data[index].change}%',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500,color: Colors.black)),
                          ],
                        ),
-                     ),
+                     ],
                    ),
                  ),
-                     separatorBuilder: (context,index)=>SizedBox(height: 5,),
-                     itemCount: StockCubit.get(context).mostActivesData!.data.length)),
+               ),
+             ),
+                 separatorBuilder: (context,index)=>SizedBox(height: 5,),
+                 itemCount: StockCubit.get(context).mostActivesData!.data.length),
                   fallback: (context)=>Center(child: CircularProgressIndicator(),)),
               ]),
 

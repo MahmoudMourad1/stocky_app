@@ -202,23 +202,24 @@ class HomeScreen extends StatelessWidget {
   Widget AutoScrollToPBar(StockModel model)=>CarouselSlider(
     items: model.data
         .map(
-          (item) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Row(children: [
-          Text('${item.symbol}',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w300,color: Colors.white), ),
-          SizedBox(width: 5,),
-          Text('${item.price}',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w300,color: Colors.white),),
-          SizedBox(width: 5,),
-          Text('${item.change}',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w300,color: item.change!>0?Colors.green:Colors.red ),),
-          SizedBox(width: 4,),
-        ],),
-      ),
+          (item) => Container(
+            width:140,
+            child: Row(children: [
+
+              Text('${item.symbol}',style: TextStyle(fontSize: 12,fontWeight: FontWeight.w300,color: Colors.white), ),
+              SizedBox(width: 5,),
+              Text('${item.price}',style: TextStyle(fontSize: 12,fontWeight: FontWeight.w300,color: Colors.white),),
+              SizedBox(width: 5,),
+              Expanded(child: Text('${item.change}',style: TextStyle(fontSize: 12,fontWeight: FontWeight.w300,color: item.change!>0?Colors.green:Colors.red ),)),
+
+            ],),
+          ),
     ).toList(),
 
     options: CarouselOptions(
       pageSnapping: false,
         height: 380.0,
-        viewportFraction: 0.5,
+        viewportFraction: 0.4,
         initialPage: 0,
         enableInfiniteScroll: true,
         reverse: true,
