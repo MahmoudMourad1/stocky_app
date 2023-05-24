@@ -235,6 +235,7 @@ void changeValue({required String value}){
       GetQuoteData(symbol: symbol);
     });
   }
+
   //  QuoteModel? quoteData;
   // void GetQuoteData({required String symbol}){
   //   emit(StockLoadingQuoteData());

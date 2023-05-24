@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hexcolor/hexcolor.dart';
+
 import 'package:stock_twit/models/quote_model.dart';
 import 'package:stock_twit/modules/quote_screen/custom_dateScreen.dart';
 import 'package:stock_twit/shared/components/components.dart';
@@ -133,6 +133,7 @@ class QuoteScreen extends StatelessWidget {
                          ],
                        ),
                      ),
+                     SizedBox(height: 20,),
                      Row(
                        children: [
                          Container(
@@ -205,6 +206,7 @@ class QuoteScreen extends StatelessWidget {
                      //   ),
                      // ),
 
+                     SizedBox(height: 30,),
                      Container(
                        height: 120,
                        child: ListView.separated

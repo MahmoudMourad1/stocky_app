@@ -55,6 +55,7 @@ dependencies:
 
 
 
+
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
