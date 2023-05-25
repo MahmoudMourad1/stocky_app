@@ -7,13 +7,19 @@ import 'package:stock_twit/shared/cubit/states.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class CustomDateScreen extends StatelessWidget {
-  const CustomDateScreen({Key? key}) : super(key: key);
 
+  const CustomDateScreen({
+    super.key,
+    required this.symbol,
+
+  });
+
+  final String symbol;
   @override
   Widget build(BuildContext context) {
     var datecontroller=TextEditingController();
-    String? fromDate;
-     String? toDate;
+    late String fromDate;
+    late String toDate;
      return BlocProvider(
        create: (BuildContext context)=>StockCubit(),
        child: BlocConsumer<StockCubit,StockStates>(
@@ -53,9 +59,9 @@ class CustomDateScreen extends StatelessWidget {
 
 
 
-                             fromDate =' ${value.year}-${zero1}${value.month}-${zerod1}${value.day}';
+                             fromDate ='${value.year}-${zero1}${value.month}-${zerod1}${value.day}';
 
-                             print('${fromDate}');
+
                            });
                          }
 
@@ -78,11 +84,15 @@ class CustomDateScreen extends StatelessWidget {
                              value.month<10?zero1='0':zero1='';
                              value.day<10?zerod1='0':zerod1='';
 
-                             toDate =' ${value.year}-${zero1}${value.month}-${zerod1}${value.day}';
 
+
+                             toDate ='${value.year}-${zero1}${value.month}-${zerod1}${value.day}';
+
+                             print('${fromDate}');
                              print('${toDate}');
+                             StockCubit.get(context).GetTickerData(from: '${fromDate.toString()}', to: '${toDate.toString()}', symbol: '${symbol}');
                            });
-                           StockCubit.get(context).GetTickerData(from: '${fromDate}', to: '${toDate}', symbol: 'AAPL');
+
                          }
 
                      ),

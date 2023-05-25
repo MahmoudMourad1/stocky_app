@@ -95,12 +95,12 @@ class StockCubit extends Cubit<StockStates>{
     });
   }
     NewsModel? newsData;
-    void GetNewsData(){
+    void GetNewsData({required int size}){
       emit(StockLoadingNewsData());
       DioHelper.getData(path: 'fmp/articles',query: {
        'apikey':'62f652ede75269ab096cf35d5a365c78',
         'page':0,
-        'size':10,
+        'size':size,
       }).then((value) {
 
         newsData=NewsModel.fromJson(value.data);
@@ -165,7 +165,6 @@ class StockCubit extends Cubit<StockStates>{
   TickerModel? tickerData;
   String apikeyticker='d5b9984a4e631a7bffb4547c83bcbfd3';
   void GetTickerData({required String from,required String to,required String symbol}){
-
     emit(StockLoadingEtfData());
     DioHelper.getData(path: 'historical-price-full/${symbol}',query: {
       'apikey':apikeyticker,
@@ -235,6 +234,8 @@ void changeValue({required String value}){
       GetQuoteData(symbol: symbol);
     });
   }
+
+
 
   //  QuoteModel? quoteData;
   // void GetQuoteData({required String symbol}){

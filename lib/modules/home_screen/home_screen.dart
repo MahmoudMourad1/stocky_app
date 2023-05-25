@@ -7,12 +7,15 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:scroll_loop_auto_scroll/scroll_loop_auto_scroll.dart';
 import 'package:stock_twit/models/stock_model.dart';
 import 'package:stock_twit/modules/crypto_screen/crypto_screen.dart';
 import 'package:stock_twit/modules/etf_screen/etf_screen.dart';
 import 'package:stock_twit/modules/forex_screen/forex_screen.dart';
+import 'package:stock_twit/modules/news_screen/news_screen.dart';
+import 'package:stock_twit/modules/quote_screen/quote_screen.dart';
 import 'package:stock_twit/modules/search_screen/search_screen.dart';
 import 'package:stock_twit/modules/stock_screen/stock_screen.dart';
 import 'package:stock_twit/shared/components/components.dart';
@@ -38,6 +41,10 @@ class HomeScreen extends StatelessWidget {
         }
         if(state is StockErrorForexData){
           print(state.error);
+        }
+
+        if(state is StockSuccessNewsData){
+          FlutterNativeSplash.remove();
         }
       },
 
@@ -119,10 +126,82 @@ class HomeScreen extends StatelessWidget {
                               itemCount: categoryImg.length),
                         ),
                         SizedBox(height: 10,),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Row(
+                            children: [
+                              Text('Stocks',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+                              Spacer(),
+                              TextButton(onPressed: (){
+                                NavigateTo(context, StockScreen());
+                              }, child: Text('See More',style: TextStyle(color: Colors.blueGrey,fontSize: 15),))
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 10,),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20.0),
+                          child: Container(
+                            height: 70,
+                            child: ListView.separated(
+                              physics: BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context,index)=>InkWell(
+                                  onTap: (){
+                                    NavigateTo(context, QuoteScreen(symbol: '${StockCubit.get(context).mostGainerData!.data[index].symbol}'));
+                                  },
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.all(10.0),
+
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(50.0),
+                                          color: Colors.black,
+                                        ),
+                                        child:FancyShimmerImage(
+                                            imageUrl: "https://fmpcloud.io/image-stock/${StockCubit.get(context).mostGainerData!.data[index+10].symbol}.png",
+                                            boxFit: BoxFit.cover,width: 30.0,
+                                            height: 30.0,errorWidget:SizedBox()
+                                        ),
+                                      ),
+
+                                      SizedBox(width: 6,),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text('${StockCubit.get(context).mostGainerData!.data[index+10].symbol}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
+                                          SizedBox(height: 5,),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            children: [
+                                              Text('${StockCubit.get(context).mostGainerData!.data[index+10].price}',style: TextStyle(fontSize: 15),),
+                                              Icon(Icons.arrow_drop_up,size: 30,color:StockCubit.get(context).mostGainerData!.data[index+10].change>0?Colors.green:Colors.red ,)
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                separatorBuilder: (context,index)=>SizedBox(width: 20,),
+                                itemCount: StockCubit.get(context).mostGainerData?.data.length!=null?15:0),
+
+                          ),
+                        ),
 
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: Text('News',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+                          child: Row(
+                            children: [
+                              Text('News',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+                              Spacer(),
+                              TextButton(onPressed: (){
+                                NavigateTo(context, NewsScreen());
+                              }, child: Text('See More',style: TextStyle(color: Colors.blueGrey,fontSize: 15),))
+                            ],
+                          ),
                         ),
                         Container(
                           child: ConditionalBuilder(condition: StockCubit.get(context).newsData?.data!=null,

@@ -142,7 +142,7 @@ class QuoteScreen extends StatelessWidget {
                              child: Text('Statistics',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w600,color: Colors.blueGrey),)),
                          Spacer(),
                         ElevatedButton(onPressed: (){
-                          NavigateTo(context, CustomDateScreen());
+                          NavigateTo(context, CustomDateScreen(symbol: symbol,));
                         },
                             style: ButtonStyle(
                               backgroundColor: MaterialStatePropertyAll<Color>(Colors.blueGrey),
