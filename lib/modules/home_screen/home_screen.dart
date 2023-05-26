@@ -99,7 +99,7 @@ class HomeScreen extends StatelessWidget {
                   //Home Screen Start
                   Container(
                     decoration: BoxDecoration(
-                      color: HexColor('#f3f5f6'),
+                      color: Colors.white,
                       borderRadius: BorderRadius.only(topRight: Radius.circular(30),topLeft: Radius.circular(30))
                     ),
                     child: Column(
@@ -116,12 +116,18 @@ class HomeScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 20,),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+
                           height:120,
                           child: ListView.separated(
                               physics: BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
-                              itemBuilder: (context,index)=>CategoryList(context,index),
+                              itemBuilder: (context,index)=>Row(
+                                children: [
+                                  SizedBox(width: index==0?20:0,),
+                                  CategoryList(context,index),
+                                ],
+                              ),
+
                               separatorBuilder: (context,index)=>SizedBox(width: 19,),
                               itemCount: categoryImg.length),
                         ),
@@ -139,58 +145,55 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 10,),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20.0),
-                          child: Container(
-                            height: 70,
-                            child: ListView.separated(
-                              physics: BouncingScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context,index)=>InkWell(
-                                  onTap: (){
-                                    NavigateTo(context, QuoteScreen(symbol: '${StockCubit.get(context).mostGainerData!.data[index].symbol}'));
-                                  },
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.all(10.0),
+                        Container(
+                          height: 70,
+                          child: ListView.separated(
+                            physics: BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context,index)=>InkWell(
+                                onTap: (){
+                                  NavigateTo(context, QuoteScreen(symbol: '${StockCubit.get(context).mostGainerData!.data[index].symbol}'));
+                                },
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(width: index==0?20:0,),
+                                    Container(
+                                      padding: EdgeInsets.all(10.0),
 
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(50.0),
-                                          color: Colors.black,
-                                        ),
-                                        child:FancyShimmerImage(
-                                            imageUrl: "https://fmpcloud.io/image-stock/${StockCubit.get(context).mostGainerData!.data[index+10].symbol}.png",
-                                            boxFit: BoxFit.cover,width: 30.0,
-                                            height: 30.0,errorWidget:SizedBox()
-                                        ),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50.0),
+                                        color: Colors.black,
                                       ),
+                                      child:FancyShimmerImage(
+                                          imageUrl: "https://fmpcloud.io/image-stock/${StockCubit.get(context).mostGainerData!.data[index+10].symbol}.png",
+                                          boxFit: BoxFit.cover,width: 30.0,
+                                          height: 30.0,errorWidget:SizedBox()
+                                      ),
+                                    ),
 
-                                      SizedBox(width: 6,),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text('${StockCubit.get(context).mostGainerData!.data[index+10].symbol}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
-                                          SizedBox(height: 5,),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.end,
-                                            children: [
-                                              Text('${StockCubit.get(context).mostGainerData!.data[index+10].price}',style: TextStyle(fontSize: 15),),
-                                              Icon(Icons.arrow_drop_up,size: 30,color:StockCubit.get(context).mostGainerData!.data[index+10].change>0?Colors.green:Colors.red ,)
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                    SizedBox(width: 6,),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text('${StockCubit.get(context).mostGainerData!.data[index+10].symbol}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
+                                        SizedBox(height: 5,),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                            Text('${StockCubit.get(context).mostGainerData!.data[index+10].price}',style: TextStyle(fontSize: 15),),
+                                            Icon(Icons.arrow_drop_up,size: 30,color:StockCubit.get(context).mostGainerData!.data[index+10].change>0?Colors.green:Colors.red ,)
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                                separatorBuilder: (context,index)=>SizedBox(width: 20,),
-                                itemCount: StockCubit.get(context).mostGainerData?.data.length!=null?15:0),
+                              ),
+                              separatorBuilder: (context,index)=>SizedBox(width: 20,),
+                              itemCount: StockCubit.get(context).mostGainerData?.data.length!=null?15:0),
 
-                          ),
                         ),
-
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
                           child: Row(
@@ -285,11 +288,11 @@ class HomeScreen extends StatelessWidget {
             width:140,
             child: Row(children: [
 
-              Text('${item.symbol}',style: TextStyle(fontSize: 12,fontWeight: FontWeight.w300,color: Colors.white), ),
+              Text('${item.symbol}',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Colors.white), ),
               SizedBox(width: 5,),
-              Text('${item.price}',style: TextStyle(fontSize: 12,fontWeight: FontWeight.w300,color: Colors.white),),
+              Text('${item.price}',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,color: Colors.white),),
               SizedBox(width: 5,),
-              Expanded(child: Text('${item.change}',style: TextStyle(fontSize: 12,fontWeight: FontWeight.w300,color: item.change!>0?Colors.green:Colors.red ),)),
+              Expanded(child: Text('${item.change}',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w400,color: item.change!>0?Colors.green:Colors.red ),)),
 
             ],),
           ),
@@ -341,9 +344,9 @@ class HomeScreen extends StatelessWidget {
     padding: const EdgeInsets.all(10.0),
     child: InkWell(
       onTap: (){
-        if(index ==3 ){
+        if(index ==2 ){
           return NavigateTo(context, ForexScreen());
-        }else if(index==4){
+        }else if(index==3){
           return NavigateTo(context, EtfScreen());
         }
         if(index ==0 ){

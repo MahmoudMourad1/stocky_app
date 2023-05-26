@@ -72,8 +72,8 @@ flutter_launcher_icons:
 flutter_native_splash:
   android: true
   ios: true
-  web: true
-  background_image: "assets/splash2.png"
+  web: false
+  background_image: "assets/splash2.jpg"
 
   flutter:
     sdk: flutter
