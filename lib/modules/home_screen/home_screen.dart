@@ -7,7 +7,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+
 import 'package:hexcolor/hexcolor.dart';
 import 'package:scroll_loop_auto_scroll/scroll_loop_auto_scroll.dart';
 import 'package:stock_twit/models/stock_model.dart';
@@ -43,9 +43,7 @@ class HomeScreen extends StatelessWidget {
           print(state.error);
         }
 
-        if(state is StockSuccessNewsData){
-          FlutterNativeSplash.remove();
-        }
+
       },
 
       builder: (context,state){
