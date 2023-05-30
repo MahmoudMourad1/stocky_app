@@ -50,13 +50,17 @@ dependencies:
   fancy_shimmer_image: ^2.0.2
   webview_flutter: ^4.2.0
   scroll_loop_auto_scroll: ^0.0.5
-
+  csv: ^5.0.2
   shimmer: ^2.0.0
+  google_fonts: ^4.0.4
+  flutter_native_splash: ^2.2.19
 
 
-
-
-
+flutter_native_splash:
+  background_image: assets/splash2.png
+  android: true
+  ios: true
+  web: false
 
 
 
@@ -99,8 +103,15 @@ flutter:
   assets:
     - assets/
     - assets/ic_launcher.png
+    - assets/splash4.gif
+    - assets/splash2.png
+    - assets/logo.gif
     - assets/ic_launcher_background.png
     - assets/ic_launcher_foreground.png
+    - assets/assets_csv/
+
+
+
   # To add assets to your application, add an assets section, like this:
 
 

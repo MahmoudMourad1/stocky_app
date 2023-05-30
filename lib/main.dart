@@ -3,18 +3,22 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import 'package:stock_twit/modules/home_screen/home_screen.dart';
 import 'package:stock_twit/shared/bloc_observer.dart';
 import 'package:stock_twit/shared/cubit/cubit.dart';
 import 'package:stock_twit/shared/network/remote/dio_helpers.dart';
 
-
+import 'package:google_fonts/google_fonts.dart';
 import 'modules/home_screen/splash_screen.dart';
 
-void main() {
+void main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
 
 
 
@@ -35,6 +39,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(
+          // fontFamily: GoogleFonts.abrilFatface().fontFamily,
           appBarTheme: AppBarTheme(
 
             systemOverlayStyle: SystemUiOverlayStyle(

@@ -7,6 +7,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import 'package:hexcolor/hexcolor.dart';
 import 'package:scroll_loop_auto_scroll/scroll_loop_auto_scroll.dart';
@@ -42,6 +43,9 @@ class HomeScreen extends StatelessWidget {
         if(state is StockErrorForexData){
           print(state.error);
         }
+        if(state is StockSuccessNewsData){
+          FlutterNativeSplash.remove();
+        }
 
 
       },
@@ -50,8 +54,7 @@ class HomeScreen extends StatelessWidget {
         return Scaffold(
           backgroundColor:  controller.initialScrollOffset>0? Colors.white:Colors.black,
           appBar: AppBar(
-
-            title: Text('STOCK'.toUpperCase(),style: TextStyle(fontSize: 25,fontWeight: FontWeight.w600,color: Colors.white.withOpacity(0.9)),),
+            title: Image.asset('assets/logo.gif',width: 160,repeat: ImageRepeat.repeatX),
             titleSpacing: 20.0,
             elevation: 0.0,
             actions: [

@@ -27,194 +27,12 @@ class TickerScreen extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context)=>StockCubit()..GetTickerData(from: from, to: to, symbol: symbol),
+      create: (BuildContext context)=>StockCubit()..GetTickerData(from: from, to: to, symbol: symbol)..LoadAssetsCsv(symbol: symbol),
 
       child: BlocConsumer<StockCubit,StockStates>(listener:(context,state){} ,builder:(context,state){
        TickerModel? ticker =StockCubit.get(context).tickerData;
        StockCubit.get(context).tooltipBehavior = TooltipBehavior(enable: true);
-       if(ticker?.symbol=='TSLA'){
-         StockCubit.get(context).drop=<DateTime>[
-           DateTime(2023, 07, 30),
-           DateTime(2021,10,25),
-           DateTime(2022,01,20),
-           DateTime(2022,05,09),
-           DateTime(2021,07,21),
-           DateTime(2022,09,30),
-           DateTime(2022,12,12),
-         ];
-       }else if(ticker?.symbol=='GOOGL'){
-         StockCubit.get(context).drop=<DateTime>[
-           DateTime(2023, 03, 17),
-           DateTime(2022,09, 16),
-           DateTime(2022,04, 25),
-           DateTime(2022,01, 05),
-           DateTime(2021,07, 23),
-         ];
-       }else if(ticker?.symbol=='AMZN'){
-         StockCubit.get(context).drop=<DateTime>[
-           DateTime(2023,01, 13),
-           DateTime(2022,04, 26),
-           DateTime(2022,10, 31),
 
-         ];
-       }else if(ticker?.symbol=='FB'){
-         //2021-06-25
-         // 2021-09-28
-         // 2022-02-04
-         StockCubit.get(context).drop=<DateTime>[
-           DateTime(2021, 06, 17),
-           DateTime(2021,09, 28),
-           DateTime(2022,02, 04),
-
-         ];
-       }else if(ticker?.symbol=='JNJ'){
-         // 2021-07-26
-         // 2021-09-14
-         // 2021-12-15
-         // 2022-03-14
-         // 2022-08-12
-         // 2022-10-24
-         // 2023-01-27
-         StockCubit.get(context).drop=<DateTime>[
-           DateTime(2023, 01, 27),
-           DateTime(2022,10, 24),
-           DateTime(2022,08, 12),
-           DateTime(2022,03, 14),
-           DateTime(2021,12, 15),
-           DateTime(2021,09, 14),
-           DateTime(2021,07, 26),
-         ];
-       }else if(ticker?.symbol=='JPM'){
-         //2022-02-28
-         // 2022-04-26
-         // 2022-10-31
-         StockCubit.get(context).drop=<DateTime>[
-           DateTime(2023, 10, 31),
-           DateTime(2022,04, 26),
-           DateTime(2022,02, 28),
-
-         ];
-       }else if(ticker?.symbol=='MSFT'){
-         //2021-07-02
-         // 2021-10-26
-         // 2022-01-06
-         // 2022-04-19
-         // 2022-09-19
-         // 2023-01-27
-         // 2023-03-20
-         StockCubit.get(context).drop=<DateTime>[
-           DateTime(2023, 03, 20),
-           DateTime(2023,01, 27),
-           DateTime(2022,09, 19),
-           DateTime(2022,04, 19),
-           DateTime(2022,01, 06),
-           DateTime(2022,19, 26),
-           DateTime(2021,07, 02),
-
-         ];
-       }else if(ticker?.symbol=='NVDA'){
-         //2021-08-23
-         // 2021-11-02
-         // 2022-01-13
-         // 2022-04-26
-         // 2022-09-02
-         // 2022-11-07
-         // 2023-01-27
-         // 2023-03-20
-         StockCubit.get(context).drop=<DateTime>[
-           DateTime(2023, 03, 20),
-           DateTime(2023,01, 27),
-           DateTime(2022,11, 07),
-           DateTime(2022,09, 02),
-           DateTime(2022,04, 26),
-           DateTime(2022,01, 13),
-           DateTime(2021,11, 02),
-           DateTime(2021,08, 23),
-         ];
-       }else if(ticker?.symbol=='PFE'){
-         //2021-07-26
-         // 2021-11-16
-         // 2022-02-04
-         // 2022-08-26
-         // 2022-11-14
-         // 2023-01-12
-         // 2023-02-27
-         StockCubit.get(context).drop=<DateTime>[
-           DateTime(2023, 02, 27),
-           DateTime(2023,01, 12),
-           DateTime(2022,11, 14),
-           DateTime(2022,08, 26),
-           DateTime(2022,02, 04),
-           DateTime(2021,07, 26),
-           DateTime(2021,11, 16),
-         ];
-       }else if(ticker?.symbol=='PG'){
-         //2021-07-26
-         // 2021-12-08
-         // 2022-05-17
-         // 2022-09-02
-         // 2022-11-21
-         // 2023-01-20
-         // 2023-03-27
-         StockCubit.get(context).drop=<DateTime>[
-           DateTime(2023, 03, 27),
-           DateTime(2023,01, 20),
-           DateTime(2022,11, 21),
-           DateTime(2022,09, 02),
-           DateTime(2022,05, 17),
-           DateTime(2021,12, 08),
-           DateTime(2021,07, 26),
-         ];
-       }else if(ticker?.symbol=='V'){
-         //2021-10-26
-         // 2022-05-03
-         // 2022-09-19
-         // 2022-10-24
-         // 2023-01-05
-         StockCubit.get(context).drop=<DateTime>[
-           DateTime(2023, 01, 05),
-           DateTime(2022,10, 24),
-           DateTime(2022,09, 19),
-           DateTime(2022,05, 03),
-           DateTime(2021,10, 26),
-         ];
-       }else if(ticker?.symbol=='XOM'){
-         // 2022-01-13
-         // 2022-04-11
-         // 2022-10-17
-         StockCubit.get(context).drop=<DateTime>[
-           DateTime(2022, 10, 17),
-           DateTime(2022,04, 11),
-           DateTime(2022,01, 13),
-         ];
-       }else if(ticker?.symbol=='TWTR'){
-         // 2022-01-13
-         // 2022-04-11
-         // 2022-10-17
-         StockCubit.get(context).drop=<DateTime>[
-           DateTime(2021, 02, 11),
-           DateTime(2022,06, 01),
-           DateTime(2022,04, 04),
-           DateTime(2022,10, 05),
-           DateTime(2022,04, 10),
-
-         ];
-       }else if(ticker?.symbol=='AAPL'){
-         // 2022-01-13
-         // 2022-04-11
-         // 2022-10-17
-         StockCubit.get(context).drop=<DateTime>[
-           DateTime(2021, 07, 02),
-           DateTime(2021,11, 23),
-           DateTime(2022,05, 10),
-           DateTime(2022,07, 22),
-           DateTime(2022,09, 19),
-           DateTime(2022,12, 20),
-           DateTime(2023,01, 27),
-           DateTime(2023,03, 20),
-
-         ];
-       }
 
 
 
@@ -325,37 +143,24 @@ class TickerScreen extends StatelessWidget {
                     var formate2 = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
                     // print(formate2);
                     // print(formate2.runtimeType);
-                    var from = new DateTime(dateTime.year, dateTime.month, dateTime.day-10);
-                    var to=new DateTime(dateTime.year, dateTime.month, dateTime.day+10);
-
-                    String zero1;
-                    String zerod1;
-                    from.month<10?zero1='0':zero1='';
-                    from.day<10?zerod1='0':zerod1='';
-                    String zero2;
-                    String zerod2;
-                    print('from : ${from.year}-${zero1}${from.month}-${from.day}');
-                    print(' to: "${to.year}-${zero1}${to.month}-${to.day}');
-                    to.month<10?zero2='0':zero2='';
-                    to.day<10?zerod2='0':zerod2='';
 
 
-                    print('from : ${from.year}-${zero1}${from.month}-${zerod1}${from.day}');
-                    print(' to: "${to.year}-${zero2}${to.month}-${zerod2}${to.day}');
-                    StockCubit.get(context).GetTickerData(from: "${from.year}-${zero1}${from.month}-${zerod1}${from.day}", to: "${to.year}-${zero2}${to.month}-${zerod2}${to.day}", symbol: symbol);
+                    int index=StockCubit.get(context).critical.indexOf(value);
+
+                    StockCubit.get(context).GetTickerData(from: StockCubit.get(context).before[index], to:StockCubit.get(context).after[index], symbol: symbol);
 
                   },
                   onTap: (){
 
-                    ticker.data.forEach((element) {
-                      print(element.date);
-                    });
+                    // ticker.data.forEach((element) {
+                    //   print(element.date);
+                    // });
                   },
-                  items: StockCubit.get(context).drop.map<DropdownMenuItem<String>>((DateTime value) {
+                  items: StockCubit.get(context).critical.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
 
-                      value: DateFormat("yyyy-MM-dd").format(value).toString(),
-                      child: Text(DateFormat("yyyy-MM-dd").format(value).toString(),),
+                      value: value.toString(),
+                      child: Text(value.toString(),),
 
                     );
                   }).toList(),),

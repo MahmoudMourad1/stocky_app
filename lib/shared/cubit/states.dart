@@ -92,3 +92,6 @@ class StockErrorQuoteData extends StockStates{
   final String error;
   StockErrorQuoteData({required this.error});
 }
+
+class ExcelSuccessData extends StockStates{}
+class ExcelErrorData extends StockStates{}

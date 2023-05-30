@@ -1,5 +1,6 @@
 
 import 'package:bloc/bloc.dart';
+import 'package:csv/csv.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stock_twit/models/crypto_model.dart';
 import 'package:stock_twit/models/etf_model.dart';
@@ -11,7 +12,7 @@ import 'package:stock_twit/models/ticker_model.dart';
 import 'package:stock_twit/shared/cubit/states.dart';
 import 'package:stock_twit/shared/network/remote/dio_helpers.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-
+import 'package:flutter/services.dart';
 class StockCubit extends Cubit<StockStates>{
   StockCubit():super(StockInitialState());
 
@@ -145,7 +146,7 @@ class StockCubit extends Cubit<StockStates>{
   void GetStockSymbolData(){
 
     emit(StockLoadingStockSymbolData());
-    DioHelper.getData(path: 'quote/TWTR,GOOGL,TSLA,AAPL,AMZN,MSFT,FB,JPM,V,PG,JNJ,NVDA,PFE,XOM',query: {
+    DioHelper.getData(path: 'quote/TSLA,TWTR,AAPL,AMZN,MSFT,FB,JPM,V,PG,JNJ,NVDA,PFE,XOM',query: {
       'apikey':apikeysymbol,
     }).then((value) {
 
@@ -250,6 +251,28 @@ void changeValue({required String value}){
   //   });
   // }
 
+
+  List<List<dynamic>> datacsv=[];
+  List<String> before=[];
+  List<String> critical=[];
+  List<String> after=[];
+  List<String> polarity=[];
+  void LoadAssetsCsv({required String symbol}){
+    rootBundle.loadString('assets/assets_csv/${symbol}.csv').then((value) {
+      datacsv=CsvToListConverter().convert(value);
+      for(var i = 1; i < datacsv.length; i++){
+        critical.add(datacsv[i][0]);
+        before.add(datacsv[i][1]);
+        after.add(datacsv[i][2]);
+        polarity.add(datacsv[i][7]);
+      }
+      print(critical);
+      print(polarity);
+      emit(ExcelSuccessData());
+    }).catchError((error){
+      print(error.toString());
+      emit(ExcelErrorData());
+    });}
 
 
 }
