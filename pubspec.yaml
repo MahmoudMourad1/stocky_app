@@ -58,9 +58,11 @@ dependencies:
 
 flutter_native_splash:
   background_image: assets/splash2.png
+  fullscreen: true
   android: true
   ios: true
   web: false
+
 
 
 
