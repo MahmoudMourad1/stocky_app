@@ -1,6 +1,7 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../models/etf_model.dart';
 import '../../shared/cubit/cubit.dart';
@@ -14,7 +15,7 @@ class EtfScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-    title: Text('ETF'.toUpperCase(),style: TextStyle(fontSize: 30,fontWeight: FontWeight.w600,color: Colors.white.withOpacity(0.9)),),
+    title: Text('ETF'.toUpperCase(),style: TextStyle(fontSize: 30.sp,fontWeight: FontWeight.w600,color: Colors.white.withOpacity(0.9)),),
     elevation: 0.0,
     backgroundColor: Colors.black,
     ),
@@ -50,7 +51,7 @@ class EtfScreen extends StatelessWidget {
 
           ],
         ),
-        SizedBox(height: 10,),
+        SizedBox(height: 10.h,),
         Row(
           children: [
             Text('${model.exchangeShortName}',style:TextStyle(color:Colors.grey,fontWeight: FontWeight.bold),),

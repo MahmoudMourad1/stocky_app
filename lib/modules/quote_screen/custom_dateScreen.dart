@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:stock_twit/shared/cubit/cubit.dart';
 import 'package:stock_twit/shared/cubit/states.dart';
@@ -66,7 +67,7 @@ class CustomDateScreen extends StatelessWidget {
                          }
 
                      ),
-                     SizedBox(width: 30,),
+                     SizedBox(width: 30.w,),
                      MaterialButton(
                          color: Colors.blueGrey,
                          child: Text('To'),
@@ -98,81 +99,82 @@ class CustomDateScreen extends StatelessWidget {
                      ),
                    ],
                  ),
-                 Container(
-                   height: 600,
-                   child: SfDataGrid(
-                     source: _employeeDataSource,
-                     selectionMode: SelectionMode.multiple,
-                     allowSorting: true,
+                 Expanded(
+                   child: Container(
+                     child: SfDataGrid(
+                       source: _employeeDataSource,
+                       selectionMode: SelectionMode.multiple,
+                       allowSorting: true,
 
-                     allowTriStateSorting: true,
-                     defaultColumnWidth: 80,
-                     columns: [
-                       GridColumn(
+                       allowTriStateSorting: true,
+                       defaultColumnWidth: 80.w,
+                       columns: [
+                         GridColumn(
 
-                           columnName: 'date',
-                           label: Container(
-                               alignment: Alignment.center,
-                               child: Text(
-                                 'DATE',
-                                 overflow: TextOverflow.ellipsis,
-                               ))),
-                       GridColumn(
-                           columnName: 'open',
-                           label: Container(
+                             columnName: 'date',
+                             label: Container(
+                                 alignment: Alignment.center,
+                                 child: Text(
+                                   'DATE',
+                                   overflow: TextOverflow.ellipsis,
+                                 ))),
+                         GridColumn(
+                             columnName: 'open',
+                             label: Container(
 
-                               alignment: Alignment.center,
-                               child: Text(
-                                 'open',
-                                 overflow: TextOverflow.ellipsis,
-                               ))),
-                       GridColumn(
-                           columnName: 'high',
-                           label: Container(
+                                 alignment: Alignment.center,
+                                 child: Text(
+                                   'open',
+                                   overflow: TextOverflow.ellipsis,
+                                 ))),
+                         GridColumn(
+                             columnName: 'high',
+                             label: Container(
 
-                               alignment: Alignment.center,
-                               child: Text(
-                                 'high',
-                                 overflow: TextOverflow.ellipsis,
-                               ))),
-                       GridColumn(
-                           columnName: 'low',
-                           label: Container(
+                                 alignment: Alignment.center,
+                                 child: Text(
+                                   'high',
+                                   overflow: TextOverflow.ellipsis,
+                                 ))),
+                         GridColumn(
+                             columnName: 'low',
+                             label: Container(
 
-                               alignment: Alignment.center,
+                                 alignment: Alignment.center,
 
-                               child: Text(
-                                 'low',
-                                 overflow: TextOverflow.ellipsis,
-                               ))),
-                       GridColumn(
-                           columnName: 'close',
-                           label: Container(
+                                 child: Text(
+                                   'low',
+                                   overflow: TextOverflow.ellipsis,
+                                 ))),
+                         GridColumn(
+                             columnName: 'close',
+                             label: Container(
 
-                               alignment: Alignment.center,
-                               child: Text(
-                                 'close',
-                                 overflow: TextOverflow.ellipsis,
-                               ))),
-                       GridColumn(
-                           columnName: 'volume',
-                           label: Container(
+                                 alignment: Alignment.center,
+                                 child: Text(
+                                   'close',
+                                   overflow: TextOverflow.ellipsis,
+                                 ))),
+                         GridColumn(
+                             columnName: 'volume',
+                             label: Container(
 
-                               alignment: Alignment.center,
-                               child: Text(
-                                 'volume',
-                                 overflow: TextOverflow.ellipsis,
-                               ))),
-                       GridColumn(
-                           columnName: 'change',
-                           label: Container(
-                               alignment: Alignment.center,
+                                 alignment: Alignment.center,
+                                 child: Text(
+                                   'volume',
+                                   overflow: TextOverflow.ellipsis,
+                                 ))),
+                         GridColumn(
+                             columnName: 'change',
+                             label: Container(
+                                 alignment: Alignment.center,
 
-                               child: Text(
-                                 'change',
-                                 overflow: TextOverflow.ellipsis,
-                               ))),
-                     ],
+                                 child: Text(
+                                   'change',
+                                   overflow: TextOverflow.ellipsis,
+                                 ))),
+                       ],
+                     ),
                    ),
                  )
                ],

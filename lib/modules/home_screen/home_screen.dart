@@ -7,7 +7,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:hexcolor/hexcolor.dart';
 import 'package:scroll_loop_auto_scroll/scroll_loop_auto_scroll.dart';
@@ -27,9 +27,9 @@ import '../../shared/components/textlist.dart';
 import '../news_webview/news_webview.dart';
 
 class HomeScreen extends StatelessWidget {
-   HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
 
-   var controller =ScrollController();
+  var controller =ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,238 +43,229 @@ class HomeScreen extends StatelessWidget {
         if(state is StockErrorForexData){
           print(state.error);
         }
-        if(state is StockSuccessNewsData){
-          FlutterNativeSplash.remove();
-        }
 
 
       },
 
       builder: (context,state){
         return Scaffold(
-          backgroundColor:  controller.initialScrollOffset>0? Colors.white:Colors.black,
-          appBar: AppBar(
-            title: Image.asset('assets/logo.gif',width: 160,repeat: ImageRepeat.repeatX),
-            titleSpacing: 20.0,
-            elevation: 0.0,
-            actions: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal:10.0),
-                child: IconButton(icon:Icon(Icons.search,size: 25) ,color: Colors.grey.withOpacity(0.9),
-                  onPressed: (){
-                  NavigateTo(context, SearchScreen());
-                },),
-              )
-            ],
-            backgroundColor: Colors.transparent,
-          ),
-          body: Container(
-            decoration: BoxDecoration(
-              color: HexColor('#3861fb'),
-              borderRadius:BorderRadius.only(topRight: Radius.circular(15),topLeft: Radius.circular(15))
-
+            backgroundColor:  controller.initialScrollOffset>0? Colors.white:Colors.black,
+            appBar: AppBar(
+              title: Image.asset('assets/logo.gif',width: 160,repeat: ImageRepeat.repeatX),
+              titleSpacing: 20.0,
+              elevation: 0.0,
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal:10.0),
+                  child: IconButton(icon:Icon(Icons.search,size: 25) ,color: Colors.grey.withOpacity(0.9),
+                    onPressed: (){
+                      NavigateTo(context, SearchScreen());
+                    },),
+                )
+              ],
+              backgroundColor: Colors.transparent,
             ),
-            child: SingleChildScrollView(
-              controller: controller,
+            body: Container(
+              decoration: BoxDecoration(
+                  color: HexColor('#3861fb'),
+                  borderRadius:BorderRadius.only(topRight: Radius.circular(15.r),topLeft: Radius.circular(15.r))
 
-              scrollDirection: Axis.vertical,
-              child: Column(
-                children: [
-                  //Top Auto scroll Bar
-                  Container(
-                      decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius:BorderRadius.only(topRight: Radius.circular(15),topLeft: Radius.circular(15))
-
-                      ),
-                      height: 30,
-                      child: ConditionalBuilder(
-                        condition: StockCubit.get(context).mostGainerData?.data!=null,
-                        builder: (context)=>  AutoScrollToPBar(StockCubit.get(context).mostGainerData!),
-
-
-                        fallback: (context)=>Container(width: double.infinity,),
-                      )
-                  ),
-
-                  //Home Screen Start
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(topRight: Radius.circular(30),topLeft: Radius.circular(30))
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ConditionalBuilder(
-                          condition: StockCubit.get(context).stockSymbolData!=null,
-                          builder: (context)=>SwiperView(StockCubit.get(context).stockSymbolData,context),
-                          fallback: (context)=>Container(
-                            color: Colors.transparent,
-                              height: 300,
-                              width: 300,
-                              child: Center(child: CircularProgressIndicator())),
-                        ),
-                        SizedBox(height: 20,),
-                        Container(
-
-                          height:120,
-                          child: ListView.separated(
-                              physics: BouncingScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context,index)=>Row(
-                                children: [
-                                  SizedBox(width: index==0?20:0,),
-                                  CategoryList(context,index),
-                                ],
-                              ),
-
-                              separatorBuilder: (context,index)=>SizedBox(width: 19,),
-                              itemCount: categoryImg.length),
-                        ),
-                        SizedBox(height: 10,),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: Row(
-                            children: [
-                              Text('Stocks',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
-                              Spacer(),
-                              TextButton(onPressed: (){
-                                NavigateTo(context, StockScreen());
-                              }, child: Text('See More',style: TextStyle(color: Colors.blueGrey,fontSize: 15),))
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 10,),
-                        Container(
-                          height: 70,
-                          child: ListView.separated(
-                            physics: BouncingScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context,index)=>InkWell(
-                                onTap: (){
-                                  NavigateTo(context, QuoteScreen(symbol: '${StockCubit.get(context).mostGainerData!.data[index].symbol}'));
-                                },
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(width: index==0?20:0,),
-                                    Container(
-                                      padding: EdgeInsets.all(10.0),
-
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50.0),
-                                        color: Colors.black,
-                                      ),
-                                      child:FancyShimmerImage(
-                                          imageUrl: "https://fmpcloud.io/image-stock/${StockCubit.get(context).mostGainerData!.data[index+10].symbol}.png",
-                                          boxFit: BoxFit.cover,width: 30.0,
-                                          height: 30.0,errorWidget:SizedBox()
-                                      ),
-                                    ),
-
-                                    SizedBox(width: 6,),
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text('${StockCubit.get(context).mostGainerData!.data[index+10].symbol}',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w900),),
-                                        SizedBox(height: 5,),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
-                                          children: [
-                                            Text('${StockCubit.get(context).mostGainerData!.data[index+10].price}',style: TextStyle(fontSize: 15),),
-                                            Icon(Icons.arrow_drop_up,size: 30,color:StockCubit.get(context).mostGainerData!.data[index+10].change>0?Colors.green:Colors.red ,)
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              separatorBuilder: (context,index)=>SizedBox(width: 20,),
-                              itemCount: StockCubit.get(context).mostGainerData?.data.length!=null?15:0),
-
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: Row(
-                            children: [
-                              Text('News',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
-                              Spacer(),
-                              TextButton(onPressed: (){
-                                NavigateTo(context, NewsScreen());
-                              }, child: Text('See More',style: TextStyle(color: Colors.blueGrey,fontSize: 15),))
-                            ],
-                          ),
-                        ),
-                        Container(
-                          child: ConditionalBuilder(condition: StockCubit.get(context).newsData?.data!=null,
-                              builder: (context)=>ListView.separated(
-                                physics: NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemBuilder: (context,index)=>Padding(
-                                    padding: const EdgeInsets.all(20.0),
-                                    child: InkWell(
-                                      onTap: (){
-                                        NavigateTo(context, webviewScreen("${StockCubit.get(context).newsData!.data[index].link}"));
-
-                                      },
-                                      child: Container(
-                                        height: 90,color: Colors.transparent,
-                                        child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              height: 90,
-                                              width: 90,
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius: BorderRadius.circular(20),
-                                                image:DecorationImage(image:
-                                                CachedNetworkImageProvider(
-                                                    '${StockCubit.get(context).newsData!.data[index].image}'),
-                                                  fit: BoxFit.fill,),
-                                              ),
-                                            ),
-
-                                            Expanded(child: Padding(
-                                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                              child: Column(
-                                                children: [
-
-                                                  Text('${StockCubit.get(context).newsData!.data[index].title}' ,style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,),maxLines: 2,overflow: TextOverflow.ellipsis,),
-                                                  Spacer(),
-                                                  Row(
-                                                    children: [
-                                                      Text('${StockCubit.get(context).newsData!.data[index].author}',style: TextStyle(color:Colors.grey,fontSize: 10.0,),),
-                                                      Text('.',style: TextStyle(color:Colors.grey,fontSize: 15.0,fontWeight: FontWeight.bold),),
-                                                      Text('${StockCubit.get(context).newsData!.data[index].date}',style: TextStyle(color:Colors.grey,fontSize: 10.0,),)
-                                                    ],
-                                                  )
-
-                                                ],
-                                              ),
-                                            )),
-                                          ],
-
-                                        ),
-
-                                      ),
-                                    ),
-                                  ),
-                                  separatorBuilder:(context,index)=>SizedBox(height: 0,),
-                                  itemCount: StockCubit.get(context).newsData!.data.length),
-                              fallback: (context)=>Container(height: 300, child: SizedBox())),
-                        ),
-
-                      ],
-                    ),
-
-                  ),
-                ],
               ),
-            ),
-          )
+              child: SingleChildScrollView(
+                controller: controller,
+
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  children: [
+                    //Top Auto scroll Bar
+                    Container(
+                        decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            borderRadius:BorderRadius.only(topRight: Radius.circular(15.r),topLeft: Radius.circular(15.r))
+
+                        ),
+                        height: 30.h,
+                        child: ConditionalBuilder(
+                          condition: StockCubit.get(context).mostGainerData?.data!=null,
+                          builder: (context)=>  AutoScrollToPBar(StockCubit.get(context).mostGainerData!),
+
+                          fallback: (context)=>Container(width: double.infinity,),
+                        )
+                    ),
+
+                    //Home Screen Start
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(topRight: Radius.circular(30.r),topLeft: Radius.circular(30.r))
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ConditionalBuilder(
+                            condition: StockCubit.get(context).stockSymbolData!=null,
+                            builder: (context)=>SwiperView(StockCubit.get(context).stockSymbolData,context),
+                            fallback: (context)=>Container(
+                                color: Colors.transparent,
+                                height: 300.h,
+                                width: 300.w,
+                                child: Center(child: CircularProgressIndicator())),
+                          ),
+                          SizedBox(height: 20.h,),
+                          Container(
+
+                            height:120.h,
+                            child: ListView.separated(
+                                physics: BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context,index)=> CategoryList(context,index),
+                                padding: EdgeInsets.only(left: 20),
+                                separatorBuilder: (context,index)=>SizedBox(width: 19,),
+                                itemCount: categoryImg.length),
+                          ),
+                          SizedBox(height:20.h,),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: Row(
+                              children: [
+                                Text('Stocks',style: TextStyle(fontSize: 30.sp,fontWeight: FontWeight.bold),),
+                                Spacer(),
+                                TextButton(onPressed: (){
+                                  NavigateTo(context, StockScreen());
+                                }, child: Text('See More',style: TextStyle(color: Colors.blueGrey,fontSize: 15.sp),))
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 10.h,),
+                          Container(
+                            height: 70.h,
+                            child: ListView.separated(
+                                padding: EdgeInsets.only(left: 20),
+                                physics: BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context,index)=>InkWell(
+                                  onTap: (){
+                                    NavigateTo(context, QuoteScreen(symbol: '${StockCubit.get(context).mostGainerData!.data[index].symbol}'));
+                                  },
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.all(10.0),
+
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(50.0.r),
+                                          color: Colors.black,
+                                        ),
+                                        child:FancyShimmerImage(
+                                            imageUrl: "https://fmpcloud.io/image-stock/${StockCubit.get(context).mostGainerData!.data[index+10].symbol}.png",
+                                            boxFit: BoxFit.cover,width: 30.0.w,
+                                            height: 30.0.h,errorWidget:SizedBox()
+                                        ),
+                                      ),
+
+                                      SizedBox(width: 6.w,),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text('${StockCubit.get(context).mostGainerData!.data[index+10].symbol}',style: TextStyle(fontSize: 18.sp,fontWeight: FontWeight.w900),),
+                                          SizedBox(height: 5.h,),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            children: [
+                                              Text('${StockCubit.get(context).mostGainerData!.data[index+10].price}',style: TextStyle(fontSize: 15.sp),),
+                                              Icon(Icons.arrow_drop_up,size: 30.w,color:StockCubit.get(context).mostGainerData!.data[index+10].change>0?Colors.green:Colors.red ,)
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                separatorBuilder: (context,index)=>SizedBox(width: 20.w,),
+                                itemCount: StockCubit.get(context).mostGainerData?.data.length!=null?15:0),
+
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: Row(
+                              children: [
+                                Text('News',style: TextStyle(fontSize: 30.sp,fontWeight: FontWeight.bold),),
+                                Spacer(),
+                                TextButton(onPressed: (){
+                                  NavigateTo(context, NewsScreen());
+                                }, child: Text('See More',style: TextStyle(color: Colors.blueGrey,fontSize: 15.sp),))
+                              ],
+                            ),
+                          ),
+                          Container(
+                            child: ConditionalBuilder(condition: StockCubit.get(context).newsData?.data!=null,
+                                builder: (context)=>ListView.separated(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemBuilder: (context,index)=>Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: InkWell(
+                                        onTap: (){
+                                          NavigateTo(context, webviewScreen("${StockCubit.get(context).newsData!.data[index].link}"));
+
+                                        },
+                                        child: Container(
+                                          height: 90,color: Colors.transparent,
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                height: 90.h,
+                                                width: 90.w,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius: BorderRadius.circular(20),
+                                                  image:DecorationImage(image:
+                                                  CachedNetworkImageProvider(
+                                                      '${StockCubit.get(context).newsData!.data[index].image}'),
+                                                    fit: BoxFit.fill,),
+                                                ),
+                                              ),
+
+                                              Expanded(child: Padding(
+                                                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                                child: Column(
+                                                  children: [
+
+                                                    Text('${StockCubit.get(context).newsData!.data[index].title}' ,style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,),maxLines: 2,overflow: TextOverflow.ellipsis,),
+                                                    Spacer(),
+                                                    Row(
+                                                      children: [
+                                                        Text('${StockCubit.get(context).newsData!.data[index].author}',style: TextStyle(color:Colors.grey,fontSize: 10.0.sp,),),
+                                                        Text('.',style: TextStyle(color:Colors.grey,fontSize: 15.0.sp,fontWeight: FontWeight.bold),),
+                                                        Text('${StockCubit.get(context).newsData!.data[index].date}',style: TextStyle(color:Colors.grey,fontSize: 10.0.sp,),)
+                                                      ],
+                                                    )
+
+                                                  ],
+                                                ),
+                                              )),
+                                            ],
+
+                                          ),
+
+                                        ),
+                                      ),
+                                    ),
+                                    separatorBuilder:(context,index)=>SizedBox(height: 0,),
+                                    itemCount: StockCubit.get(context).newsData!.data.length),
+                                fallback: (context)=>Container(height: 300.h, child: SizedBox())),
+                          ),
+
+                        ],
+                      ),
+
+                    ),
+                  ],
+                ),
+              ),
+            )
 
         );
       },
@@ -286,21 +277,21 @@ class HomeScreen extends StatelessWidget {
     items: model.data
         .map(
           (item) => Container(
-            width:140,
-            child: Row(children: [
+        width:140,
+        child: Row(children: [
 
-              Text('${item.symbol}',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Colors.white), ),
-              SizedBox(width: 5,),
-              Text('${item.price}',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,color: Colors.white),),
-              SizedBox(width: 5,),
-              Expanded(child: Text('${item.change}',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w400,color: item.change!>0?Colors.green:Colors.red ),)),
+          Text('${item.symbol}',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Colors.white), ),
+          SizedBox(width: 5,),
+          Text('${item.price}',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,color: Colors.white),),
+          SizedBox(width: 5,),
+          Expanded(child: Text('${item.change}',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w400,color: item.change!>0?Colors.green:Colors.red ),)),
 
-            ],),
-          ),
+        ],),
+      ),
     ).toList(),
 
     options: CarouselOptions(
-      pageSnapping: false,
+        pageSnapping: false,
         height: 380.0,
         viewportFraction: 0.4,
         initialPage: 0,
@@ -315,7 +306,7 @@ class HomeScreen extends StatelessWidget {
         autoPlayCurve: Curves.linear,
         scrollDirection: Axis.horizontal
 
-    //      height: 380.0,
+      //      height: 380.0,
       //         viewportFraction: 0.5,
       //         initialPage: 0,
       //         enableInfiniteScroll: true,
@@ -353,9 +344,9 @@ class HomeScreen extends StatelessWidget {
         if(index ==0 ){
           return NavigateTo(context, StockScreen());
         }else if (index==1)
-          {
-            return NavigateTo(context, CryptoScreen());
-          }
+        {
+          return NavigateTo(context, CryptoScreen());
+        }
       },
       child: Container(
         width: 100,

@@ -1,6 +1,7 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stock_twit/models/crypto_model.dart';
 import '../../shared/cubit/cubit.dart';
 import '../../shared/cubit/states.dart';
@@ -13,7 +14,7 @@ class CryptoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Crypto'.toUpperCase(),style: TextStyle(fontSize: 30,fontWeight: FontWeight.w600,color: Colors.white.withOpacity(0.9)),),
+        title: Text('Crypto'.toUpperCase(),style: TextStyle(fontSize: 30.sp,fontWeight: FontWeight.w600,color: Colors.white.withOpacity(0.9)),),
         elevation: 0.0,
         backgroundColor: Colors.black,
       ),
@@ -53,7 +54,7 @@ class CryptoScreen extends StatelessWidget {
 
           ],
         ),
-       SizedBox(height: 10,),
+       SizedBox(height: 10.h,),
         Row(
 
 

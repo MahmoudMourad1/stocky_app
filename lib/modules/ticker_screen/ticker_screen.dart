@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:stock_twit/models/ticker_model.dart';
 
@@ -57,14 +58,12 @@ class TickerScreen extends StatelessWidget {
                 scrollDirection: Axis.vertical,
                 physics: BouncingScrollPhysics(),
                 child: Column(
-
-
                   children: [
                     //Instead of appbar
                    Padding(
                      padding: const EdgeInsets.symmetric(vertical: 10.0),
                      child: Container(
-                       height: 80,
+                       height: 80.h,
                        color: Colors.transparent,
                        child: Stack(
                          children: [
@@ -74,8 +73,8 @@ class TickerScreen extends StatelessWidget {
                                placeholder: (context, url) => new CircularProgressIndicator(),
                                errorWidget: (context, url, error) => new Icon(Icons.error),
                                color: ticker.symbol=='AAPL'||ticker.symbol=='V'? Colors.black.withOpacity(0.78):null,
-                               height: 80,
-                               width: 80,
+                               height: 80.h,
+                               width: 80.w,
                                fit: BoxFit.cover,
                              ),
                            ),
@@ -106,7 +105,7 @@ class TickerScreen extends StatelessWidget {
                         series: <ChartSeries>[
                           LineSeries<ChartData, String>(
                             enableTooltip: true,
-                              width: 3,
+                              width: 3.w,
                               dataSource: chartDat,
                               pointColorMapper:(ChartData data, _) => data.color,
                               xValueMapper: (ChartData data, _) => data.x,
@@ -170,7 +169,7 @@ class TickerScreen extends StatelessWidget {
                     Container(
                         alignment: Alignment.centerLeft,
                         padding: EdgeInsets.all(10.0),
-                        child: Text('Statistics',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w600,color: Colors.blueGrey),)),
+                        child: Text('Statistics',style: TextStyle(fontSize: 25.sp,fontWeight: FontWeight.w600,color: Colors.blueGrey),)),
 
                     // ListView.separated(
                     //
@@ -244,7 +243,7 @@ class TickerScreen extends StatelessWidget {
                       allowSorting: true,
 
                       allowTriStateSorting: true,
-                      defaultColumnWidth: 80,
+                      defaultColumnWidth: 80.w,
                       columns: [
                         GridColumn(
 

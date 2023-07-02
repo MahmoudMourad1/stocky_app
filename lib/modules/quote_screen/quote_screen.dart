@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:stock_twit/models/quote_model.dart';
 import 'package:stock_twit/modules/quote_screen/custom_dateScreen.dart';
@@ -56,11 +57,11 @@ class QuoteScreen extends StatelessWidget {
 
                        child: Column(
                          children: [
-                           SizedBox(height:20),
+                           SizedBox(height:20.h),
                            Padding(
                              padding: const EdgeInsets.symmetric(vertical:10.0),
                              child: Container(
-                               height: 80,
+                               height: 80.h,
                                color: Colors.transparent,
                                child: Stack(
                                  children: [
@@ -70,8 +71,8 @@ class QuoteScreen extends StatelessWidget {
                                        placeholder: (context, url) => new CircularProgressIndicator(),
                                        errorWidget: (context, url, error) => new Icon(Icons.error),
 
-                                       height: 80,
-                                       width: 80,
+                                       height: 80.h,
+                                       width: 80.w,
                                        fit: BoxFit.cover,
                                      ),
                                    ),
@@ -92,7 +93,7 @@ class QuoteScreen extends StatelessWidget {
                                ),
                              ),
                            ),
-                           SizedBox(height:20),
+                           SizedBox(height:20.h),
                            Padding(
                              padding: const EdgeInsets.all(2.0),
                              child:  Center(
@@ -129,17 +130,17 @@ class QuoteScreen extends StatelessWidget {
 
                              ),
                            ),
-                           SizedBox(height: 60,),
+                           SizedBox(height: 60.h,),
                          ],
                        ),
                      ),
-                     SizedBox(height: 20,),
+                     SizedBox(height: 20.h,),
                      Row(
                        children: [
                          Container(
                              alignment: Alignment.centerLeft,
                              padding: EdgeInsets.all(20.0),
-                             child: Text('Statistics',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w600,color: Colors.blueGrey),)),
+                             child: Text('Statistics',style: TextStyle(fontSize: 25.sp,fontWeight: FontWeight.w600,color: Colors.blueGrey),)),
                          Spacer(),
                         ElevatedButton(onPressed: (){
                           NavigateTo(context, CustomDateScreen(symbol: symbol,));
@@ -148,7 +149,7 @@ class QuoteScreen extends StatelessWidget {
                               backgroundColor: MaterialStatePropertyAll<Color>(Colors.blueGrey),
                             ),
                             child: Text('Custom Date')),
-                         SizedBox(width: 20,),
+                         SizedBox(width: 20.w,),
                        ],
                      ),
 
@@ -213,8 +214,8 @@ class QuoteScreen extends StatelessWidget {
                          ( scrollDirection: Axis.horizontal,
                            physics: BouncingScrollPhysics(),
                            itemBuilder: (context,index)=>Container(
-                             width: 120,
-                             height: 120,
+                             width: 120.w,
+                             height: 120.h,
                              decoration: BoxDecoration(
                                color: Colors.white,
                                borderRadius: BorderRadius.circular(20),
@@ -240,15 +241,15 @@ class QuoteScreen extends StatelessWidget {
                              child:Column(
 
                                children: [
-                                 SizedBox(height: 15,),
-                                 Text('${statisticsdata[index]}',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w900,color: Colors.black),),
+                                 SizedBox(height: 15.h,),
+                                 Text('${statisticsdata[index]}',style: TextStyle(fontSize: 25.sp,fontWeight: FontWeight.w900,color: Colors.black),),
                                  Spacer(),
-                                 Text('${statistic[index]}',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.w400),),
-                                 SizedBox(height: 15,),
+                                 Text('${statistic[index]}',style: TextStyle(color: Colors.black,fontSize: 20.sp,fontWeight: FontWeight.w400),),
+                                 SizedBox(height: 15.h,),
                                ],
                              ),
                            ),
-                           separatorBuilder: (context,index)=>SizedBox(width: 20,),
+                           separatorBuilder: (context,index)=>SizedBox(width: 20.w,),
                            itemCount: statistic.length),
                      )
                    ],

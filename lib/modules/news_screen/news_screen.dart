@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stock_twit/shared/components/components.dart';
 import 'package:stock_twit/shared/cubit/cubit.dart';
 import 'package:stock_twit/shared/cubit/states.dart';
@@ -20,7 +21,7 @@ class NewsScreen extends StatelessWidget {
             return Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.black,
-                title: Text('News'.toUpperCase(),style: TextStyle(fontSize: 25,fontWeight: FontWeight.w600,color: Colors.white.withOpacity(1)),),
+                title: Text('News'.toUpperCase(),style: TextStyle(fontSize: 25.sp,fontWeight: FontWeight.w600,color: Colors.white.withOpacity(1)),),
 
               ),
               body: ConditionalBuilder(
@@ -35,13 +36,13 @@ class NewsScreen extends StatelessWidget {
 
                         },
                         child: Container(
-                          height: 90,color: Colors.transparent,
+                          height: 90.h,color: Colors.transparent,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                height: 90,
-                                width: 90,
+                                height: 90.h,
+                                width: 90.w,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(20),
@@ -82,9 +83,9 @@ class NewsScreen extends StatelessWidget {
                 fallback:(context)=> Center(child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                  Text('Loading',style: TextStyle(fontSize: 15,color: Colors.grey.shade400),),
-                    SizedBox(width: 10,),
-                    CircularProgressIndicator(color: Colors.grey.shade400,strokeWidth: 10,),
+                  Text('Loading',style: TextStyle(fontSize: 15.sp,color: Colors.grey.shade400),),
+                    SizedBox(width: 10.w,),
+                    CircularProgressIndicator(color: Colors.grey.shade400,strokeWidth: 10.w,),
                 ],))
               ),
             );
