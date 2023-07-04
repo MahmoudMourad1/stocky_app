@@ -3,16 +3,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:stock_twit/modules/quote_screen/quote_screen.dart';
-import 'package:stock_twit/modules/ticker_screen/ticker_screen.dart';
+import 'package:Stocky/modules/quote_screen/quote_screen.dart';
+import 'package:Stocky/modules/ticker_screen/ticker_screen.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 
 
 Widget SwiperContainer (Map<String,dynamic> model ,context){
  return InkWell(
    onTap: (){
-
-
      NavigateTo(context,TickerScreen(from: '2021-07-25',to:'2021-08-05' ,symbol:model['symbol'] ,));
    },
    child: Container(

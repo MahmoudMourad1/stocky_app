@@ -3,9 +3,9 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stock_twit/shared/components/components.dart';
-import 'package:stock_twit/shared/cubit/cubit.dart';
-import 'package:stock_twit/shared/cubit/states.dart';
+import 'package:Stocky/shared/components/components.dart';
+import 'package:Stocky/shared/cubit/cubit.dart';
+import 'package:Stocky/shared/cubit/states.dart';
 import 'package:shimmer/shimmer.dart';
 import '../news_webview/news_webview.dart';
 class NewsScreen extends StatelessWidget {

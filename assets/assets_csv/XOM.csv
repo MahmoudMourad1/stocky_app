@@ -1,1 +1,4 @@
-Critical Dates,before,after,scores
+Critical Dates,before,after,scores,First day price,Last day price,Actual Difference,Same_Polarity
+2022-01-13,2022-01-08,2022-01-18,139.8925489,68.97,72.82,3.8499999999999934,True
+2022-04-11,2022-04-06,2022-04-16,10982.5973875,83.42,86.67,3.25,True
+2022-10-17,2022-10-12,2022-10-22,657.8452179999999,97.5,104.45,6.950000000000003,True

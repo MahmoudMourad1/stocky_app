@@ -4,11 +4,11 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stock_twit/models/stock_model.dart';
-import 'package:stock_twit/modules/quote_screen/quote_screen.dart';
-import 'package:stock_twit/shared/components/components.dart';
-import 'package:stock_twit/shared/cubit/cubit.dart';
-import 'package:stock_twit/shared/cubit/states.dart';
+import 'package:Stocky/models/stock_model.dart';
+import 'package:Stocky/modules/quote_screen/quote_screen.dart';
+import 'package:Stocky/shared/components/components.dart';
+import 'package:Stocky/shared/cubit/cubit.dart';
+import 'package:Stocky/shared/cubit/states.dart';
 class StockScreen extends StatelessWidget {
   const StockScreen({Key? key}) : super(key: key);
 

@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:stock_twit/models/ticker_model.dart';
+import 'package:Stocky/models/ticker_model.dart';
 
-import 'package:stock_twit/shared/cubit/cubit.dart';
-import 'package:stock_twit/shared/cubit/states.dart';
+import 'package:Stocky/shared/cubit/cubit.dart';
+import 'package:Stocky/shared/cubit/states.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
@@ -134,26 +134,14 @@ class TickerScreen extends StatelessWidget {
                   ),
 
                   onChanged: (String? value) {
-                    // This is called when the user selects an item.
-
                     StockCubit.get(context).changeValue(value: value!);
-
                    var dateTime=DateFormat("yyyy-MM-dd").parse(value);
                     var formate2 = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
-                    // print(formate2);
-                    // print(formate2.runtimeType);
-
-
                     int index=StockCubit.get(context).critical.indexOf(value);
-
                     StockCubit.get(context).GetTickerData(from: StockCubit.get(context).before[index], to:StockCubit.get(context).after[index], symbol: symbol);
 
                   },
                   onTap: (){
-
-                    // ticker.data.forEach((element) {
-                    //   print(element.date);
-                    // });
                   },
                   items: StockCubit.get(context).critical.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
@@ -171,71 +159,6 @@ class TickerScreen extends StatelessWidget {
                         padding: EdgeInsets.all(10.0),
                         child: Text('Statistics',style: TextStyle(fontSize: 25.sp,fontWeight: FontWeight.w600,color: Colors.blueGrey),)),
 
-                    // ListView.separated(
-                    //
-                    //     reverse: true,
-                    //   physics: NeverScrollableScrollPhysics(),
-                    //     shrinkWrap: true,
-                    //     itemBuilder: (context,index){
-                    //       return Padding(
-                    //         padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    //         child: Container(
-                    //           height: 150,
-                    //           decoration: BoxDecoration(
-                    //             color: Colors.white,
-                    //               boxShadow: [
-                    //                 BoxShadow(
-                    //                   blurStyle: BlurStyle.inner,
-                    //                     color: Colors.grey.shade600,
-                    //                     spreadRadius: 0.5,
-                    //                     blurRadius: 10
-                    //                 )
-                    //               ]
-                    //           ),
-                    //           child: Padding(
-                    //             padding: const EdgeInsets.all(20.0),
-                    //             child: Row(
-                    //               children: [
-                    //                 Column(children: [
-                    //                   Text('open',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
-                    //                   SizedBox(height: 4,),
-                    //                   Text('${ticker.data[index].open}',style: TextStyle(color: Colors.yellow,fontSize: 20,fontWeight: FontWeight.w900),),
-                    //                   Spacer(),
-                    //                   Text('close',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
-                    //                   SizedBox(height: 4,),
-                    //                   Text('${ticker.data[index].close}',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.w900),),
-                    //                 ],),
-                    //                 Spacer(),
-                    //                 Column(children: [
-                    //                   Text('high',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
-                    //                   SizedBox(height: 4,),
-                    //                   Text('${ticker.data[index].high}',style: TextStyle(color: Colors.pinkAccent,fontSize: 20,fontWeight: FontWeight.w900),),
-                    //                   Spacer(),
-                    //                   Text('Avg.Volume',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
-                    //                   SizedBox(height: 4,),
-                    //                   Text('${ticker.data[index].vwap}',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.w900),),
-                    //                 ],),
-                    //                 Spacer(),
-                    //                 Column(children: [
-                    //                   Text('low',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
-                    //                   SizedBox(height: 4,),
-                    //                   Text('${ticker.data[index].low}',style: TextStyle(color: Colors.lightBlueAccent,fontSize: 20,fontWeight: FontWeight.w900),),
-                    //                   Spacer(),
-                    //                   Text('change',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
-                    //                   SizedBox(height: 4,),
-                    //                   Text('${ticker.data[index].change}',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.w900),),
-                    //                 ],),
-                    //               ],
-                    //             ),
-                    //           ),
-                    //         ),
-                    //       );
-                    //     },
-                    //     separatorBuilder: (context,index)=>Padding(
-                    //       padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 10),
-                    //       child: Text('${ticker.data[index].date}',style: TextStyle(fontSize: 15),),
-                    //     ),
-                    //     itemCount: ticker.data.length)
 
                     SfDataGrid(
                       source: _employeeDataSource,

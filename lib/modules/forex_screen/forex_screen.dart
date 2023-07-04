@@ -2,9 +2,9 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stock_twit/models/forex_model.dart';
-import 'package:stock_twit/shared/cubit/cubit.dart';
-import 'package:stock_twit/shared/cubit/states.dart';
+import 'package:Stocky/models/forex_model.dart';
+import 'package:Stocky/shared/cubit/cubit.dart';
+import 'package:Stocky/shared/cubit/states.dart';
 
 class ForexScreen extends StatelessWidget {
   const ForexScreen({Key? key}) : super(key: key);

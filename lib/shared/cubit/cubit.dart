@@ -2,15 +2,15 @@
 import 'package:bloc/bloc.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stock_twit/models/crypto_model.dart';
-import 'package:stock_twit/models/etf_model.dart';
-import 'package:stock_twit/models/forex_model.dart';
-import 'package:stock_twit/models/news_model.dart';
-import 'package:stock_twit/models/quote_model.dart';
-import 'package:stock_twit/models/stock_model.dart';
-import 'package:stock_twit/models/ticker_model.dart';
-import 'package:stock_twit/shared/cubit/states.dart';
-import 'package:stock_twit/shared/network/remote/dio_helpers.dart';
+import 'package:Stocky/models/crypto_model.dart';
+import 'package:Stocky/models/etf_model.dart';
+import 'package:Stocky/models/forex_model.dart';
+import 'package:Stocky/models/news_model.dart';
+import 'package:Stocky/models/quote_model.dart';
+import 'package:Stocky/models/stock_model.dart';
+import 'package:Stocky/models/ticker_model.dart';
+import 'package:Stocky/shared/cubit/states.dart';
+import 'package:Stocky/shared/network/remote/dio_helpers.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/services.dart';
 class StockCubit extends Cubit<StockStates>{
