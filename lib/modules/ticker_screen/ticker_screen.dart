@@ -3,6 +3,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:Stocky/models/ticker_model.dart';
 
@@ -98,66 +99,109 @@ class TickerScreen extends StatelessWidget {
 
                     //Drawing Chart
 
-                    Container(
-                      child: SfCartesianChart(
-                        primaryXAxis: CategoryAxis(),
-                        tooltipBehavior:StockCubit.get(context).tooltipBehavior ,
-                        series: <ChartSeries>[
-                          LineSeries<ChartData, String>(
-                            enableTooltip: true,
-                              width: 3.w,
-                              dataSource: chartDat,
-                              pointColorMapper:(ChartData data, _) => data.color,
-                              xValueMapper: (ChartData data, _) => data.x,
-                              yValueMapper: (ChartData data, _) => data.y),
-                          ScatterSeries<ChartData, String>(
-                              dataSource: chartData,
-                              pointColorMapper:(ChartData data, _) => data.color,
-                              xValueMapper: (ChartData data, _) => data.x,
-                              yValueMapper: (ChartData data, _) => data.y
-                          )
+                   Container(
+                     child: SfCartesianChart(
+                       primaryXAxis: CategoryAxis(),
+                       tooltipBehavior:StockCubit.get(context).tooltipBehavior ,
+                       series: <ChartSeries>[
+                         LineSeries<ChartData, String>(
+                             enableTooltip: true,
+                             width: 3.w,
+                             dataSource: chartDat,
+                             pointColorMapper:(ChartData data, _) => data.color,
+                             xValueMapper: (ChartData data, _) => data.x,
+                             yValueMapper: (ChartData data, _) => data.y),
+                         ScatterSeries<ChartData, String>(
+                             dataSource: chartData,
+                             pointColorMapper:(ChartData data, _) => data.color,
+                             xValueMapper: (ChartData data, _) => data.x,
+                             yValueMapper: (ChartData data, _) => data.y
+                         )
 
-                        ],
+                       ],
+                     ),
+                   ),
+
+
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(10.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Colors.blueGrey.withOpacity(0.18),
+                            ),
+                            child:CachedNetworkImage(
+                              imageUrl: "https://fmpcloud.io/image-stock/TWTR.png",
+                              color: ticker.symbol=='V'?HexColor('#1434cb'):null,
+                              placeholder: (context, url) => new CircularProgressIndicator(),
+                              errorWidget: (context, url, error) => new Icon(Icons.error),
+                              height: 30,
+                              width: 30,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          SizedBox(width: 10.w,),
+                          Text('Twitter Prediction :',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w400),),
+
+                          SizedBox(width: 15.w,),
+                          Column(
+                  children: [
+                    Icon(Icons.show_chart,color: StockCubit.get(context).predictionstate=='True'? Colors.green:Colors.red,size: 30,weight: 30,),
+                    Text(StockCubit.get(context).predictionstate,),
+                  ],
+                ),
+
+            ],
                       ),
                     ),
 
-                DropdownButton<String>(
-                  alignment: Alignment.bottomCenter,
-                  value: StockCubit.get(context).dropdownValue,
-                  icon: const Icon(Icons.calendar_month),
-                  borderRadius: BorderRadius.circular(10.0),
-                  elevation: 16,
-                  style: const TextStyle(color: Colors.deepPurple),
-                  underline: Container(
-                    height: 2,
-                    color: Colors.deepPurpleAccent,
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                              alignment: Alignment.centerLeft,
+                              padding: EdgeInsets.all(10.0),
+                              child: Text('Statistics',style: TextStyle(fontSize: 25.sp,fontWeight: FontWeight.w600,color: Colors.blueGrey),)),
+                          DropdownButton<String>(
+                            alignment: Alignment.bottomCenter,
+                            value: StockCubit.get(context).dropdownValue,
+                            icon: const Icon(Icons.calendar_month),
+                            borderRadius: BorderRadius.circular(10.0),
+                            elevation: 16,
+                            style: const TextStyle(color: Colors.deepPurple),
+                            underline: Container(
+                              height: 2,
+                              color: Colors.deepPurpleAccent,
+                            ),
 
-                  onChanged: (String? value) {
-                    StockCubit.get(context).changeValue(value: value!);
-                   var dateTime=DateFormat("yyyy-MM-dd").parse(value);
-                    var formate2 = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
-                    int index=StockCubit.get(context).critical.indexOf(value);
-                    StockCubit.get(context).GetTickerData(from: StockCubit.get(context).before[index], to:StockCubit.get(context).after[index], symbol: symbol);
+                            onChanged: (String? value) {
+                              StockCubit.get(context).changeValue(value: value!);
 
-                  },
-                  onTap: (){
-                  },
-                  items: StockCubit.get(context).critical.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
+                              var dateTime=DateFormat("yyyy-MM-dd").parse(value);
+                              var formate2 = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
+                              int index=StockCubit.get(context).critical.indexOf(value);
+                              StockCubit.get(context).predictionstate=StockCubit.get(context).polarity[index];
+                              StockCubit.get(context).GetTickerData(from: StockCubit.get(context).before[index], to:StockCubit.get(context).after[index], symbol: symbol);
 
-                      value: value.toString(),
-                      child: Text(value.toString(),),
+                            },
+                            onTap: (){
+                            },
+                            items: StockCubit.get(context).critical.map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
 
-                    );
-                  }).toList(),),
+                                value: value.toString(),
+                                child: Text(value.toString(),),
 
-
-
-                    Container(
-                        alignment: Alignment.centerLeft,
-                        padding: EdgeInsets.all(10.0),
-                        child: Text('Statistics',style: TextStyle(fontSize: 25.sp,fontWeight: FontWeight.w600,color: Colors.blueGrey),)),
+                              );
+                            }).toList(),),
+                        ],
+                      ),
+                    ),
 
 
                     SfDataGrid(

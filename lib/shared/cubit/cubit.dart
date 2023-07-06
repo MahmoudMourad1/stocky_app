@@ -274,5 +274,7 @@ void changeValue({required String value}){
       emit(ExcelErrorData());
     });}
 
+  String predictionstate='False';
+
 
 }
