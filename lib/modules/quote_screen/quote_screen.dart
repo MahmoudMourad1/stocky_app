@@ -151,64 +151,9 @@ class QuoteScreen extends StatelessWidget {
                          SizedBox(width: 20.w,),
                        ],
                      ),
-
-                     // Padding(
-                     //   padding: const EdgeInsets.all(10.0),
-                     //   child: Container(
-                     //     height: 150,
-                     //     decoration: BoxDecoration(
-                     //         color: Colors.white,
-                     //         boxShadow: [
-                     //           BoxShadow(
-                     //               blurStyle: BlurStyle.inner,
-                     //               color: Colors.grey.shade600,
-                     //               spreadRadius: 0.5,
-                     //               blurRadius: 10
-                     //           )
-                     //         ]
-                     //     ),
-                     //     child: Padding(
-                     //       padding: const EdgeInsets.all(10.0),
-                     //       child: Row(
-                     //         children: [
-                     //           Column(children: [
-                     //             Text('open',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
-                     //             SizedBox(height: 4,),
-                     //             Text('${quote?.data[0].open}',style: TextStyle(color: Colors.yellow,fontSize: 20,fontWeight: FontWeight.w900),),
-                     //             Spacer(),
-                     //             Text('close',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
-                     //             SizedBox(height: 4,),
-                     //             Text('${quote?.data[0].close}',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.w900),),
-                     //           ],),
-                     //           Spacer(),
-                     //           Column(children: [
-                     //             Text('high',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
-                     //             SizedBox(height: 4,),
-                     //             Text('${quote?.data[0].high}',style: TextStyle(color: Colors.pinkAccent,fontSize: 20,fontWeight: FontWeight.w900),),
-                     //             Spacer(),
-                     //             Text('Avg.Volume',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
-                     //             SizedBox(height: 4,),
-                     //             Text('${quote?.data[0].close}',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.w900),),
-                     //           ],),
-                     //           Spacer(),
-                     //           Column(children: [
-                     //             Text('low',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
-                     //             SizedBox(height: 4,),
-                     //             Text('${quote?.data[0].low}',style: TextStyle(color: Colors.lightBlueAccent,fontSize: 20,fontWeight: FontWeight.w900),),
-                     //             Spacer(),
-                     //             Text('change',style: TextStyle(color: Colors.grey.shade500,fontSize: 18),),
-                     //             SizedBox(height: 4,),
-                     //             Text('${quote?.data[0].high}',style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.w900),),
-                     //           ],),
-                     //         ],
-                     //       ),
-                     //     ),
-                     //   ),
-                     // ),
-
-                     SizedBox(height: 30,),
+                     SizedBox(height: 30.h,),
                      Container(
-                       height: 120,
+                       height: 120.h,
                        child: ListView.separated
                          ( scrollDirection: Axis.horizontal,
                            physics: BouncingScrollPhysics(),
@@ -250,7 +195,8 @@ class QuoteScreen extends StatelessWidget {
                            ),
                            separatorBuilder: (context,index)=>SizedBox(width: 20.w,),
                            itemCount: statistic.length),
-                     )
+                     ),
+                     SizedBox(height: 10.0.h,),
                    ],
                  ),
                ),

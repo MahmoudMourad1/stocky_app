@@ -257,6 +257,7 @@ void changeValue({required String value}){
   List<String> critical=[];
   List<String> after=[];
   List<String> polarity=[];
+  List<double> scores=[];
   void LoadAssetsCsv({required String symbol}){
     rootBundle.loadString('assets/assets_csv/${symbol}.csv').then((value) {
       datacsv=CsvToListConverter().convert(value);
@@ -265,6 +266,7 @@ void changeValue({required String value}){
         before.add(datacsv[i][1]);
         after.add(datacsv[i][2]);
         polarity.add(datacsv[i][7]);
+        scores.add(datacsv[i][3]);
       }
       print(critical);
       print(polarity);
@@ -275,6 +277,7 @@ void changeValue({required String value}){
     });}
 
   String predictionstate='False';
+  double predictionScore=0.0;
 
 
 }

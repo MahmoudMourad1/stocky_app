@@ -145,7 +145,7 @@ class HomeScreen extends StatelessWidget {
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context,index)=>InkWell(
                                   onTap: (){
-                                    NavigateTo(context, QuoteScreen(symbol: '${StockCubit.get(context).mostGainerData!.data[index].symbol}'));
+                                    NavigateTo(context, QuoteScreen(symbol: '${StockCubit.get(context).mostGainerData!.data[index+10].symbol}'));
                                   },
                                   child: Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,

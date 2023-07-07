@@ -149,8 +149,9 @@ class TickerScreen extends StatelessWidget {
                           SizedBox(width: 15.w,),
                           Column(
                   children: [
-                    Icon(Icons.show_chart,color: StockCubit.get(context).predictionstate=='True'? Colors.green:Colors.red,size: 30,weight: 30,),
-                    Text(StockCubit.get(context).predictionstate,),
+
+                    StockCubit.get(context).predictionScore>0? Icon(Icons.show_chart,color: Colors.green,):Icon(Icons.waterfall_chart,color: Colors.red,),
+                    StockCubit.get(context).predictionScore>0? Text('Rise',style: TextStyle(color: Colors.green,fontSize: 16,fontWeight: FontWeight.w500),):Text('Fall',style: TextStyle(color: Colors.red,fontSize: 16,fontWeight: FontWeight.w500),)
                   ],
                 ),
 
@@ -186,6 +187,7 @@ class TickerScreen extends StatelessWidget {
                               var formate2 = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
                               int index=StockCubit.get(context).critical.indexOf(value);
                               StockCubit.get(context).predictionstate=StockCubit.get(context).polarity[index];
+                              StockCubit.get(context).predictionScore=StockCubit.get(context).scores[index];
                               StockCubit.get(context).GetTickerData(from: StockCubit.get(context).before[index], to:StockCubit.get(context).after[index], symbol: symbol);
 
                             },
